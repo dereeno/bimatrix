@@ -3,8 +3,8 @@ import random
 # m = random.randrange(2, 4)
 # n = random.randrange(2, 4)
 
-m=3
-n=4
+m=7
+n=8
 
 with open('lrsnash_input', 'w') as file:
     file.write("{0} {1}\n".format(m,n))

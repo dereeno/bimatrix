@@ -2,7 +2,7 @@ import os
 #get input
 
 #create 'lrsnash_input' file
-# execfile('input_genertor.py')
+execfile('input_genertor.py')
 #run lrs_nash
 os.system('./lrsnash lrsnash_input > lrsnash_output')
 #create 'lrsnash_output' file

@@ -54,13 +54,13 @@ class Strategy:
         return result
 
     def get_lexico_feasible_bases(self):
-        # u,v are always basic; offset +1 to support indices
+        # u/v are always basic; offset +1 to support indices
         basic_variables = [0] + [i+1 for i in self.support]
 
         # number of basic variables will be n+1 for player 1 and m+1 for player 2
         total_basic_variables = self.opponent_number_of_pure_strategies + 1
 
-        # how many variables need to be added to form a basis
+        # to_add gets number of variables we need to add to form a basis
         to_add = total_basic_variables - len(basic_variables)
 
         # find all possible variables to add to a basis
@@ -103,49 +103,51 @@ class Basis:
         else:
             return self.is_lexico_positive()
 
-    def not_a_basis(self): return self.basic_matrix_inverse == None
+    def not_a_basis(self):
+        return self.basic_matrix_inverse == None
 
     def infeasible(self):
-        # basic variables vector will be the first column of the basic inverse matrix
-        basic_variables_vector = [row[0] for row in self.basic_matrix_inverse]
-        if min(basic_variables_vector) < 0:
-            return True
-        else:
-            return False
+        return min(self.basic_variables_vector()) < 0
 
     def solution_does_not_correspond_to_strategy(self):
         strategy_variables = self.basic_solution()[1:self.number_of_pure_strategies+1]
         for i, item in enumerate(strategy_variables):
             # checking whether strategy distribution is equal to basic solution
-            if item != round(float(self.strategy.distribution[i]),4):
+            if item != round(float(self.strategy.distribution[i]), 5):
                 return True
 
         return False
 
     def is_lexico_positive(self):
         flag = True
+        # k will get the dimension of the basic matrix inverse
         k = self.basic_matrix_inverse.shape[0]
         for row in range(k):
             if flag == False:
                 break
             for column in range(k):
-                if self.basic_matrix_inverse[row][column] == 0:
+                current = round(self.basic_matrix_inverse[row][column], 5)
+                if current == 0:
                     continue
-                elif self.basic_matrix_inverse[row][column] < 0:
+                elif current < 0:
                     flag = False
                     break
                 else:
                     break
         return flag
 
+    def basic_variables_vector(self):
+        # basic variables vector will be the first column of the basic inverse matrix
+        return [round(row[0],5) for row in self.basic_matrix_inverse]
+
     def basic_solution(self):
-        basic_variables_vector = [row[0] for row in self.basic_matrix_inverse]
+        basic_variables_vector = self.basic_variables_vector()
         result = []
         j = 0
-
+        # m+n+1 is the number of components in the variable vector (number of columns)
         for i in range(m+n+1):
             if i in self.indices:
-                result.append(round(basic_variables_vector[j],4))
+                result.append(basic_variables_vector[j])
                 j = j+1
             else:
                 result.append(0)
@@ -202,12 +204,10 @@ def is_square(matrix): return matrix.shape[0] == matrix.shape[1]
 def is_full_rank(matrix): return matrix_rank(matrix) == matrix.shape[0]
 
 def sign_of_matrix(matrix):
-    if not is_square(matrix):
-        return 0
-    shape = matrix.shape[0]
+    dimension = matrix.shape[0]
     sign = slogdet(matrix)[0] # get the sign of the determinant of 'matrix'
     i = 0
-    while sign == 0 and i < shape:
+    while sign == 0 and i < dimension:
         sign = (-1) * slogdet(replace_column_by_1(matrix, i))[0]
         i = i+1
 
