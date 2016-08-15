@@ -1,7 +1,10 @@
 import random
 
-m = random.randrange(2, 5)
-n = random.randrange(2, 5)
+# m = random.randrange(2, 4)
+# n = random.randrange(2, 4)
+
+m=3
+n=4
 
 with open('lrsnash_input', 'w') as file:
     file.write("{0} {1}\n".format(m,n))
