@@ -121,12 +121,11 @@ class Basis:
 
     def is_lexico_positive(self):
         flag = True
-        # k will get the dimension of the basic matrix inverse
-        k = self.basic_matrix_inverse.shape[0]
-        for row in range(k):
+        dimension = self.basic_matrix_inverse.shape[0]
+        for row in range(dimension):
             if flag == False:
                 break
-            for column in range(k):
+            for column in range(dimension):
                 current = round(self.basic_matrix_inverse[row][column], 5)
                 if current == 0:
                     continue
@@ -198,9 +197,7 @@ class PairOfLexicoFeasibleBases:
     def square_submatrix(self, matrix):
         alpha_indices = self.alpha.basic_startegy_variables()
         beta_indices = self.beta.basic_startegy_variables()
-        temp = matrix[alpha_indices,:]
-        result = temp[:,beta_indices]
-        return result
+        return matrix[alpha_indices,:][:,beta_indices]
 
     def sign(self):
         t = len(self.alpha.basic_startegy_variables())
@@ -209,7 +206,6 @@ class PairOfLexicoFeasibleBases:
         sign_of_B = sign_of_matrix(self.square_submatrix(B))
 
         return (-1)**(t+1) * sign_of_A * sign_of_B
-
 
 def sign_of_matrix(matrix):
     dimension = matrix.shape[0]
