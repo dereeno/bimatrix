@@ -87,14 +87,13 @@ for i in range(number_of_equilibria):
     result[i][1]['distribution'] = e2[i]
     result[i][1]['payoff'] = p2[i]
 
-fcin = open('index_input', 'w')
-fcin.write(json.dumps(result))
-fcin.close()
+with open('index_input', 'w') as file:
+    file.write(json.dumps(result))
 
-fcin = open('clique_input', 'w')
-for i in range(number_of_equilibria):
-    fcin.write("{0} {1}\n".format(index1[i],index2[i]))
-fcin.close()
+with open('clique_input', 'w') as file:
+    for i in range(number_of_equilibria):
+        file.write("{0} {1}\n".format(index1[i],index2[i]))
+
 
 
 
