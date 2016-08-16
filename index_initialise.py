@@ -84,8 +84,6 @@ player_2_matrix = create_matrix(2)
 equilibria_hash = {}
 strategy_hash_player_1 = {}
 strategy_hash_player_2 = {}
-bases_hash_player_1 = {}
-bases_hash_player_2 = {}
 
 
 with open('index_input', 'r') as file:
