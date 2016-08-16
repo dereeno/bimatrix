@@ -41,28 +41,29 @@ def create_matrix(player):
 
         return  result
 
-def create_components_dictionary(raw_clique_output):
+def create_components_hash(raw_clique_output):
     raw_clique_output = [item.split() for item in raw_clique_output if item != '\n']
     counter = 0
     result = {}
     for j in range (len(raw_clique_output)):
         if raw_clique_output[j][0] == "Connected":
-            counter += 1
             result[counter] = []
             j += 1
             while(j < len(raw_clique_output) and raw_clique_output[j][0] != "Connected"):
                 if raw_clique_output[j]:
                     result[counter].append(raw_clique_output[j])
-                j+=1
-    return counter, result
+                j += 1
+            result[counter] = parse_component(result[counter])
+            counter += 1
+    return result
 
-def create_component(rows):
+def parse_component(rows):
     result = []
     for row in rows:
-        list = (" ".join(row)).split('x')
-        if len(list) > 2: print "ERROR!! unexpected format"
-        player1_strategies = list[0].replace('{','').replace('}','').split(',')
-        player2_strategies = list[1].replace('{','').replace('}','').split(',')
+        row = (" ".join(row)).split('x')
+        if len(row) > 2: print "ERROR!! unexpected format"
+        player1_strategies = row[0].replace('{','').replace('}','').split(',')
+        player2_strategies = row[1].replace('{','').replace('}','').split(',')
         for strg_player1 in player1_strategies:
             for strg_player2 in player2_strategies:
                 pair = [int(strg_player1),int(strg_player2)]
@@ -79,9 +80,8 @@ def find_eq_by_numbers(number1, number2, all_equilibria):
     return result
 
 m, n, A, B  = parse_lrsnash_input()
-player_1_matrix = create_matrix(1)
-player_2_matrix = create_matrix(2)
-equilibria_hash = {}
+matrix_1 = create_matrix(1)
+matrix_2 = create_matrix(2)
 strategy_hash_player_1 = {}
 strategy_hash_player_2 = {}
 
@@ -91,11 +91,8 @@ with open('index_input', 'r') as file:
 
 # REFACTOR THIS CRAP!!!!
 with open('clique_output', 'r') as file:
-    num_of_eq_components, components_dict = create_components_dictionary(file.readlines())
-    print components_dict
+    components_hash = create_components_hash(file.readlines())
 
 
-component_indices = {}
-for j in range(1, num_of_eq_components + 1):
-    component_indices[j] = create_component(components_dict[j])
+
 

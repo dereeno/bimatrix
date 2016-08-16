@@ -84,7 +84,7 @@ class Basis:
         self.strategy = strategy
         self.player = self.strategy.player
         self.number_of_pure_strategies = strategy.number_of_pure_strategies
-        self.matrix = player_1_matrix if self.player == 1 else player_2_matrix
+        self.matrix = matrix_1 if self.player == 1 else matrix_2
         self.basic_matrix_inverse = self.get_basic_matrix_inverse()
 
     def get_basic_matrix_inverse(self):
@@ -240,18 +240,18 @@ def find_or_create_strategy(player, distribution, payoff, number):
         strategy_hash[number] = strategy
         return strategy
 
-def create_equilibrium_components(component_indices, all_equilibria):
+def create_equilibrium_components(all_equilibria):
     result = []
-    for i in range(1, num_of_eq_components + 1):
+    for i in range(len(components_hash)):
         component = []
-        for pair in component_indices[i]:
+        for pair in components_hash[i]:
             component.append(find_eq_by_numbers(pair[0], pair[1], all_equilibria))
         result.append(EquilibriumComponent(component))
     return result
 
 def main():
     all_equilibria = create_all_equilibria(equilibria_hash)
-    components = create_equilibrium_components(component_indices, all_equilibria)
+    components = create_equilibrium_components(all_equilibria)
 
     total = 0
     for component in components:
