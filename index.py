@@ -89,7 +89,7 @@ class Basis:
 
     def get_basic_matrix_inverse(self):
         basic_matrix = self.matrix[:, self.indices]
-        if is_singular(basic_matrix):
+        if Basis.is_singular(basic_matrix):
             return None
         else:
             return inv(basic_matrix)
@@ -161,6 +161,18 @@ class Basis:
             if i in self.indices: result.append(i-1)
         return result
 
+    @staticmethod
+    def is_singular(matrix):
+        return not Basis.is_square(matrix) or not Basis.is_full_rank(matrix)
+
+    @staticmethod
+    def is_square(matrix):
+        return matrix.shape[0] == matrix.shape[1]
+
+    @staticmethod
+    def is_full_rank(matrix):
+        return matrix_rank(matrix) == matrix.shape[0]
+
 class PairOfLexicoFeasibleBases:
     def __init__(self, alpha, beta):
         self.alpha = alpha
@@ -198,16 +210,12 @@ class PairOfLexicoFeasibleBases:
 
         return (-1)**(t+1) * sign_of_A * sign_of_B
 
-def is_singular(matrix): return not is_square(matrix) or not is_full_rank(matrix)
-
-def is_square(matrix): return matrix.shape[0] == matrix.shape[1]
-
-def is_full_rank(matrix): return matrix_rank(matrix) == matrix.shape[0]
 
 def sign_of_matrix(matrix):
     dimension = matrix.shape[0]
     sign = slogdet(matrix)[0] # get the sign of the determinant of 'matrix'
     i = 0
+
     while sign == 0 and i < dimension:
         sign = (-1) * slogdet(replace_column_by_1(matrix, i))[0]
         i = i+1
