@@ -71,7 +71,8 @@ class Strategy:
 
         all_bases = []
         for indices_to_add in subsets:
-            all_bases.append(Basis(sorted(basic_variables + list(indices_to_add)), self))
+            indices = sorted(basic_variables + list(indices_to_add))
+            all_bases.append(Basis(indices, self))
 
         lexico_feasible_bases = [basis for basis in all_bases if basis.is_lexico_feasible()]
 
@@ -223,10 +224,21 @@ def create_all_equilibria(equilibria_hash):
     for eq in equilibria_hash:
         distribution1 = [Fraction(x) for x in eq[0]['distribution']]
         distribution2 = [Fraction(x) for x in eq[1]['distribution']]
-        strategy1 = Strategy(1, distribution1, eq[0]['payoff'], eq[0]['number'])
-        strategy2 = Strategy(2, distribution2, eq[1]['payoff'], eq[1]['number'])
+        payoff1, number1 = eq[0]['payoff'], eq[0]['number']
+        payoff2, number2 = eq[1]['payoff'], eq[1]['number']
+        strategy1 = find_or_create_strategy(1, distribution1, payoff1, number1)
+        strategy2 = find_or_create_strategy(2, distribution2, payoff2, number2)
         result.append(Equilibrium(strategy1, strategy2))
     return result
+
+def find_or_create_strategy(player, distribution, payoff, number):
+    strategy_hash = strategy_hash_player_1 if player == 1 else strategy_hash_player_2
+    if number in strategy_hash.keys():
+        return strategy_hash[number]
+    else:
+        strategy = Strategy(player, distribution, payoff, number)
+        strategy_hash[number] = strategy
+        return strategy
 
 def create_equilibrium_components(component_indices, all_equilibria):
     result = []
