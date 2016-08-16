@@ -1,11 +1,9 @@
 #!/usr/bin/python
-from numpy.linalg import inv, slogdet, matrix_rank
-import itertools
-import pdb
-# from index_initialise import initialise
+from numpy.linalg import inv as inverse, slogdet as determinant_sign, matrix_rank
+from itertools import combinations as all_subsets
 from index_initialise import *
 from fractions import Fraction
-# import sys
+
 
 class EquilibriumComponent:
     def __init__(self, extreme_equilibria):
@@ -64,17 +62,19 @@ class Strategy:
         how_many_to_add = basis_size - len(basic_variables)
 
         # 'candidates_to_add' gets all possible variables we can add to a basis
-        candidates_to_add = [item for item in range(1, m+n+1) if item not in basic_variables]
+        candidates_to_add = \
+            [item for item in range(1, m+n+1) if item not in basic_variables]
 
         # 'subsets' gets all subsets of 'candidates_to_add' of size 'how_many_to_add'
-        subsets = itertools.combinations(candidates_to_add, how_many_to_add)
+        subsets = all_subsets(candidates_to_add, how_many_to_add)
 
         all_bases = []
         for indices_to_add in subsets:
             indices = sorted(basic_variables + list(indices_to_add))
             all_bases.append(Basis(indices, self))
 
-        lexico_feasible_bases = [basis for basis in all_bases if basis.is_lexico_feasible()]
+        lexico_feasible_bases = \
+            [basis for basis in all_bases if basis.is_lexico_feasible()]
 
         return lexico_feasible_bases
 
@@ -92,7 +92,7 @@ class Basis:
         if Basis.is_singular(basic_matrix):
             return None
         else:
-            return inv(basic_matrix)
+            return inverse(basic_matrix)
 
     def is_lexico_feasible(self):
         if self.not_a_basis():
@@ -209,11 +209,11 @@ class PairOfLexicoFeasibleBases:
 
 def sign_of_matrix(matrix):
     dimension = matrix.shape[0]
-    sign = slogdet(matrix)[0] # get the sign of the determinant of 'matrix'
+    sign = determinant_sign(matrix)[0] # get the sign of the determinant of 'matrix'
     i = 0
 
     while sign == 0 and i < dimension:
-        sign = (-1) * slogdet(replace_column_by_1(matrix, i))[0]
+        sign = (-1) * determinant_sign(replace_column_by_1(matrix, i))[0]
         i = i+1
 
     return sign
