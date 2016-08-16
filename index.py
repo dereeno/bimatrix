@@ -57,17 +57,17 @@ class Strategy:
         # u/v are always basic; offset +1 to support indices
         basic_variables = [0] + [i+1 for i in self.support]
 
-        # number of basic variables will be n+1 for player 1 and m+1 for player 2
-        total_basic_variables = self.opponent_number_of_pure_strategies + 1
+        # 'basis_size' will be n+1 for player 1 and m+1 for player 2
+        basis_size = self.opponent_number_of_pure_strategies + 1
 
-        # to_add gets number of variables we need to add to form a basis
-        to_add = total_basic_variables - len(basic_variables)
+        # 'how_many_to_add' gets the number of variables we need to add to form a basis
+        how_many_to_add = basis_size - len(basic_variables)
 
-        # find all possible variables to add to a basis
+        # 'candidates_to_add' gets all possible variables we can add to a basis
         candidates_to_add = [item for item in range(1, m+n+1) if item not in basic_variables]
 
-        # all subsets from 'candidates' of size 'to_add'
-        subsets = itertools.combinations(candidates_to_add, to_add)
+        # 'subsets' gets all subsets of 'candidates_to_add' of size 'how_many_to_add'
+        subsets = itertools.combinations(candidates_to_add, how_many_to_add)
 
         all_bases = []
         for indices_to_add in subsets:
