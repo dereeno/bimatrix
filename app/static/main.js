@@ -66,7 +66,7 @@ $(document).ready(function() {
         st1.innerHTML = eq[0]['distribution'];
         st2.innerHTML = eq[1]['distribution'];
         pay1.innerHTML = eq[0]['payoff'];
-        pay2.innerHTML = eq[0]['payoff'];
+        pay2.innerHTML = eq[1]['payoff'];
       })
 
     }
