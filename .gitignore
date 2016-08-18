@@ -26,3 +26,4 @@ archive/mysite/mysite/urls.py
 archive/mysite/mysite/urls.pyc
 archive/mysite/mysite/wsgi.py
 archive/mysite/mysite/wsgi.pyc
+*.pyc
