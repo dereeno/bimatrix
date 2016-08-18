@@ -6,6 +6,7 @@ from fractions import Fraction
 import json
 from numpy import zeros
 
+
 class EquilibriumComponent:
     def __init__(self, extreme_equilibria):
         self.extreme_equilibria = extreme_equilibria
@@ -279,12 +280,12 @@ def find_eq_by_numbers(number1, number2, all_equilibria):
             result = current_eq
     return result
 
-def create_matrix(player, payoff_matrix):
+def create_matrix(player):
         if player == 1:
-            # payoff_matrix = B.transpose()
+            payoff_matrix = B.transpose()
             rows = n+1
         else:
-            # payoff_matrix = A
+            payoff_matrix = A
             rows = m+1
 
         columns = m+n+1
@@ -320,7 +321,6 @@ def parse_component(rows):
     result = []
     for row in rows:
         row = (" ".join(row)).split('x')
-        if len(row) > 2: print "ERROR!! unexpected format"
         player1_strategies = row[0].replace('{','').replace('}','').split(',')
         player2_strategies = row[1].replace('{','').replace('}','').split(',')
         for strg_player1 in player1_strategies:
@@ -330,14 +330,14 @@ def parse_component(rows):
                     result.append(pair)
     return result
 
-def main():
+def initialise():
     global m, n, A, B
     global matrix_1, matrix_2
     global strategy_hash_player_1, strategy_hash_player_2
 
     m, n, A, B  = parse_lrsnash_input()
-    matrix_1 = create_matrix(1, B.transpose())
-    matrix_2 = create_matrix(2, A)
+    matrix_1 = create_matrix(1)
+    matrix_2 = create_matrix(2)
     strategy_hash_player_1 = {}
     strategy_hash_player_2 = {}
 
@@ -347,17 +347,13 @@ def main():
     with open('clique_output', 'r') as file:
         components_hash = create_components_hash(file.readlines())
 
-    all_equilibria = create_all_equilibria(equilibria_hash)
-    components = create_equilibrium_components(all_equilibria, components_hash)
+    return equilibria_hash, components_hash
 
-    total = 0
+def write_results(components):
     result = {}
     for comp_number, component in enumerate(components):
         result["comp" + str(comp_number)] = {}
         for eq_number, eq in enumerate(component.extreme_equilibria):
-            # print "NE", ['%s' % s for s in eq.x.distribution], ['%s' % s for s in eq.y.distribution]
-            # print "lex-index", eq.lex_index
-            # print "&&&&&&&&&"
             result["comp" + str(comp_number)]["eq" + str(eq_number)] = {}
             result["comp" + str(comp_number)]["eq" + str(eq_number)]['x'] = ['%s' % s for s in eq.x.distribution]
             result["comp" + str(comp_number)]["eq" + str(eq_number)]['y'] = ['%s' % s for s in eq.y.distribution]
@@ -369,12 +365,10 @@ def main():
     with open('index_output', 'w') as file:
         file.write(json.dumps(result))
 
-    #     print "INDEX", index
-    #     total += index
-    #     print "%%%%%%%%%%%%%%%%%%%%%"
-    # if total != 1:
-    #     print "!!!!!!!!!!!!!!!!!!!!!!"
-    #     print "ERROR!! sum of all indices is not 1"
-    #     print "!!!!!!!!!!!!!!!!!!!!!!"
-    return
+def main():
+    equilibria_hash, components_hash = initialise()
+    all_equilibria = create_all_equilibria(equilibria_hash)
+    components = create_equilibrium_components(all_equilibria, components_hash)
+    write_results(components)
+
 if __name__ == "__main__": main()
