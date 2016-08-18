@@ -1,6 +1,6 @@
 import json
 from numpy import zeros
-import numpy
+# import numpy
 
 def parse_lrsnash_input():
     with open('lrsnash_input') as f:
@@ -70,6 +70,14 @@ def parse_component(rows):
                 pair = [int(strg_player1),int(strg_player2)]
                 if pair not in result:
                     result.append(pair)
+    return result
+
+def find_eq_by_numbers(number1, number2, all_equilibria):
+    result = None
+    for i in range(len(all_equilibria)):
+        current_eq = all_equilibria[i]
+        if current_eq.x.number == number1 and current_eq.y.number == number2:
+            result = current_eq
     return result
 
 m, n, A, B  = parse_lrsnash_input()

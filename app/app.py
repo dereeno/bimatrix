@@ -2,7 +2,7 @@
 from flask import Flask, render_template, request, jsonify
 import json
 import pdb
-from game_solver import *
+import game_solver
 
 # initilize flask
 app = Flask(__name__)
@@ -12,8 +12,7 @@ def home():
     if request.method == 'POST':
 
         write_input_file(request.form)
-        # execfile('game_solver.py')
-        run_algo()
+        game_solver.run()
 
         with open('index_output', 'r') as file:
             data = json.loads(file.read())
