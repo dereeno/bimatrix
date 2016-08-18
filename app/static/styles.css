@@ -1,0 +1,44 @@
+.container {
+    max-width: 500px;
+    padding-top: 20px;
+}
+input {
+    max-width: 60px;
+}
+.cell{
+    position:absolute;
+    border:1px solid black;
+}
+
+.cell input{
+  height: 40px;
+  width: 40px;
+}
+
+.A_entry{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.B_entry{
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.run_algo{
+  width: 100px;
+  position: relative;
+  height: 100px;
+  margin-top: 30px;
+  right: -200px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}

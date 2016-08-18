@@ -3,6 +3,7 @@ from numpy.linalg import inv as inverse, slogdet as determinant_sign, matrix_ran
 from itertools import combinations as all_subsets
 from index_initialise import *
 from fractions import Fraction
+import json
 
 
 class EquilibriumComponent:
@@ -36,15 +37,13 @@ class Equilibrium:
 class Strategy:
     def __init__(self, player, distribution, payoff, number):
         self.player = player
+        self.distribution = distribution
         self.payoff = payoff
         self.number = number
         self.number_of_pure_strategies = m if player == 1 else n
-        self.opponent_number_of_pure_strategies = n if player == 1 else m
-        self.distribution = distribution
-        self.support = self.get_support()
         self.lexico_feasible_bases = self.get_lexico_feasible_bases()
 
-    def get_support(self):
+    def support(self):
         result = []
         for index, strategy in enumerate(self.distribution):
             if strategy > 0:
@@ -53,10 +52,11 @@ class Strategy:
 
     def get_lexico_feasible_bases(self):
         # u/v are always basic; offset +1 to support indices
-        basic_variables = [0] + [i+1 for i in self.support]
+        basic_variables = [0] + [i+1 for i in self.support()]
 
         # 'basis_size' will be n+1 for player 1 and m+1 for player 2
-        basis_size = self.opponent_number_of_pure_strategies + 1
+        opponent_number_of_pure_strategies = n if self.player == 1 else m
+        basis_size = opponent_number_of_pure_strategies + 1
 
         # 'how_many_to_add' gets the number of variables we need to add to form a basis
         how_many_to_add = basis_size - len(basic_variables)
@@ -123,17 +123,16 @@ class Basis:
         flag = True
         dimension = self.basic_matrix_inverse.shape[0]
         for row in range(dimension):
-            if flag == False:
-                break
-            for column in range(dimension):
-                current = round(self.basic_matrix_inverse[row][column], 5)
-                if current == 0:
-                    continue
-                elif current < 0:
-                    flag = False
-                    break
-                else:
-                    break
+            if flag == True:
+                for column in range(dimension):
+                    current = round(self.basic_matrix_inverse[row][column], 5)
+                    if current == 0: # move to next coordinate if 0
+                        continue
+                    elif current < 0: # lexico-negative if < 0
+                        flag = False
+                        break
+                    else: # check next row if this row is lexico-positive
+                        break
         return flag
 
     def basic_variables_vector(self):
@@ -253,25 +252,37 @@ def create_equilibrium_components(all_equilibria):
         result.append(EquilibriumComponent(component))
     return result
 
+
 def main():
     all_equilibria = create_all_equilibria(equilibria_hash)
     components = create_equilibrium_components(all_equilibria)
 
     total = 0
-    for component in components:
-        for eq in component.extreme_equilibria:
-            print "NE", ['%s' % s for s in eq.x.distribution], ['%s' % s for s in eq.y.distribution]
-            print "lex-index", eq.lex_index
-            print "&&&&&&&&&"
+    result = {}
+    for comp_number, component in enumerate(components):
+        result["comp" + str(comp_number)] = {}
+        for eq_number, eq in enumerate(component.extreme_equilibria):
+            # print "NE", ['%s' % s for s in eq.x.distribution], ['%s' % s for s in eq.y.distribution]
+            # print "lex-index", eq.lex_index
+            # print "&&&&&&&&&"
+            result["comp" + str(comp_number)]["eq" + str(eq_number)] = {}
+            result["comp" + str(comp_number)]["eq" + str(eq_number)]['x'] = ['%s' % s for s in eq.x.distribution]
+            result["comp" + str(comp_number)]["eq" + str(eq_number)]['y'] = ['%s' % s for s in eq.y.distribution]
+            result["comp" + str(comp_number)]["eq" + str(eq_number)]['lexindex'] = eq.lex_index
 
         index  = component.index()
-        print "INDEX", index
-        total += index
-        print "%%%%%%%%%%%%%%%%%%%%%"
-    if total != 1:
-        print "!!!!!!!!!!!!!!!!!!!!!!"
-        print "ERROR!! sum of all indices is not 1"
-        print "!!!!!!!!!!!!!!!!!!!!!!"
+        result["comp" + str(comp_number)]['index'] = index
+
+    with open('index_output', 'w') as file:
+        file.write(json.dumps(result))
+
+    #     print "INDEX", index
+    #     total += index
+    #     print "%%%%%%%%%%%%%%%%%%%%%"
+    # if total != 1:
+    #     print "!!!!!!!!!!!!!!!!!!!!!!"
+    #     print "ERROR!! sum of all indices is not 1"
+    #     print "!!!!!!!!!!!!!!!!!!!!!!"
     return
 
 if __name__ == "__main__": main()
