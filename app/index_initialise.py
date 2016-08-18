@@ -1,6 +1,5 @@
 import json
 from numpy import zeros
-# import numpy
 
 def parse_lrsnash_input():
     with open('lrsnash_input') as f:
