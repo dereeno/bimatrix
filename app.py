@@ -3,9 +3,17 @@ from flask import Flask, render_template, request, jsonify
 import json
 import pdb
 import game_solver
+import os
+from flask import send_from_directory
 
 # initilize flask
 app = Flask(__name__)
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
