@@ -1,11 +1,9 @@
 #!/usr/bin/python
 from numpy.linalg import inv as inverse, slogdet as determinant_sign, matrix_rank
 from itertools import combinations as all_subsets
-# from index_initialise import *
 from fractions import Fraction
 import json
 from numpy import zeros
-
 
 class EquilibriumComponent:
     def __init__(self, extreme_equilibria):
