@@ -1,65 +1,115 @@
 $(document).ready(function() {
-  console.log("ready!");
 
-  // on form submission ...
+  create_matrix(2,2);
+
   $('form.dimensions').on('submit', function() {
-
-    console.log("the form has beeen submitted");
-
-    // grab values
     m = $('input#number_m').val();
     n = $('input#number_n').val();
-    create_matrix(m,n);
 
-    });
-  // Creating variables
+    if (validate_less_then_9(m,n)){
+      create_matrix(m,n);
+    }
 
-  $('form#wrapper').on('submit', function() {
+  });
 
-    console.log('hi there!');
+  $('form#bimatrix .random').on('click', function(){
+    $.each($('form#bimatrix').find(':input:not([type=hidden])'), function(index, input){
+      rand = Math.floor(Math.random() * 10) + 1
+      $(input).val(rand);
+    })
+    return false;
+  })
+
+  $('form#bimatrix').on('submit', function() {
     rows = $(this).find('input[name="hidden_m"]').val()
     cols = $(this).find('input[name="hidden_n"]').val()
     var matrices = collect_matrix(parseInt(rows),parseInt(cols));
-
+    $(".overlay").show();
     $.ajax({
       type: "POST",
       url: "/",
       data : {
         'A': JSON.stringify(matrices[0]), 'B': JSON.stringify(matrices[1]),
-        'm': m, 'n': n
+        'm': rows, 'n': cols
       },
       success: function(results) {
-        console.log(results);
-        show_results(results);
+        // console.log(results);
+        build_equilbria_table(results['equilibria'])
+        show_results(results['components']);
       },
       error: function(error) {
         console.log(error)
       }
+
     });
 
+    $(".overlay").hide();
+
+    function build_equilbria_table(equilibria){
+      eq_table = $('#eq-table tbody')[0]
+      eq_table.innerHTML = '';
+      $.each(equilibria, function(i, eq){
+        row = document.createElement('tr');
+        eq_table.appendChild(row);
+        number = document.createElement('td');
+        st1 = document.createElement('td');
+        pay1 = document.createElement('td');
+        st2 = document.createElement('td');
+        pay2 = document.createElement('td');
+
+        row.appendChild(number);
+        row.appendChild(st1);
+        row.appendChild(pay1);
+        row.appendChild(st2);
+        row.appendChild(pay2);
+        number.innerHTML = i+1;
+        st1.innerHTML = eq[0]['distribution'];
+        st2.innerHTML = eq[1]['distribution'];
+        pay1.innerHTML = eq[0]['payoff'];
+        pay2.innerHTML = eq[0]['payoff'];
+      })
+
+    }
+
     function show_results(results){
-      $.each(results, function(comp_name, comp_value){
-        console.log(comp_name);
+      // comp_table =document.getElementById('comp-table');
+      comp_table = $('#comp-table tbody')[0]
+      comp_table.innerHTML = '';
+      $.each(results, function(i, comp_value){
+        row = document.createElement('tr');
+        cell = document.createElement('td');
+        cell.innerHTML = i+1;
+        row.appendChild(cell);
+        comp_table.appendChild(row);
+        eq_cell = document.createElement('td');
+        row.appendChild(eq_cell);
           $.each(comp_value, function(eq_name, eq_value){
             if (eq_name == 'index'){
-              console.log("index is " + eq_value);
+              index_cell = document.createElement('td')
+              index_cell.innerHTML = "index: " + eq_value;
+              row.appendChild(index_cell);
             }
             else{
-              console.log("lex " + eq_value['lexindex']);
-              console.log("x " + eq_value['x']);
-              console.log("y " + eq_value['y']);
+              eq_row = document.createElement('tr');
+              cell1 = document.createElement('td');
+              cell2 = document.createElement('td');
+              cell3 = document.createElement('td');
+              cell2.innerHTML = ", x: [" + eq_value['x']+']';
+              cell3.innerHTML = ", y: [" + eq_value['y']+']';
+              cell1.innerHTML = "lex-index: " + eq_value['lexindex'];
+              eq_row.appendChild(cell1);
+              eq_row.appendChild(cell2);
+              eq_row.appendChild(cell3);
+              eq_cell.appendChild(eq_row);
             }
           })
       })
     }
 
     function collect_matrix(rows,cols) {
-        var myArr = document.forms.wrapper;
-        var myControls = myArr;
-        var name_value_array = [];
         var A_values = [];
         var B_values = [];
-        var form = $('form#wrapper');
+        var form = $('form#bimatrix');
         for (var i = 0; i < rows; i++){
           A_values.push([]);
           B_values.push([]);
@@ -68,88 +118,45 @@ $(document).ready(function() {
             B_values[i].push(form.find('input[row='+i+'][col='+j+'].B_entry').val());
           }
         }
-
-
-        // for (var i = 0; i < myControls.length; i++) {
-        //   var aControl = myControls[i];
-        //   if (aControl.type != "button") {
-        //     // store value in a map
-        //     name_value_array.push(aControl.value, aControl.name);
-        //     // document.getElementById("resultField").appendChild(document.createTextNode(aControl.value + " "));
-        //   }
-
-        // }
-        // show map values as a popup
-        console.log("A");
-        console.log(A_values);
-        console.log("B");
-        console.log(B_values);
       return [A_values,B_values];
     };
-
-
-
   });
 
+  function validate_less_then_9(m,n){
+    if (m > 9 || n > 9 || m < 0 || n < 0 ){
+      alert('value must be less then 9');
+      return false
+    }
+    return true;
+  }
+
   function create_matrix(rows, cols){
-    var wid=100,
-        hei=100,
-        d=document.createElement('div'),
-        input1 = document.createElement('input'),
-        wrap=document.getElementById('wrapper');
+    var d = document.createElement('td'),
+        bimatrix=document.getElementById('table');
     d.className='cell';
-    d.style.width=wid+'px';
-    d.style.height=hei+'px';
-    input1.setAttribute('type', 'number');
-    //Creating elements
-    wrap.innerHTML = "";
+
+    bimatrix.innerHTML = "";
     for(var i=0;i<rows;i++){
+        row = document.createElement('tr');
       for(var j=0;j<cols;j++){
           var c=d.cloneNode(false);
-          var inp1 = input1.cloneNode(false);
+          var inp1 = document.createElement('input');
           inp1.setAttribute('row', i);
           inp1.setAttribute('col', j);
           inp1.setAttribute('required','true');
+          inp1.setAttribute('type', 'number');
           var inp2 = inp1.cloneNode(false);
           inp1.className =  "A_entry";
           inp2.className =  "B_entry";
           c.appendChild(inp1);
           c.appendChild(inp2);
-          wrap.appendChild(c);
-    }}
-
-    //Setting position
-    for(var i=0;i<wrap.childNodes.length;i++){
-        setCSS(i);
+          row.appendChild(c);
+      }
+      bimatrix.appendChild(row);
     }
+    $('form#bimatrix input[name="hidden_m"]').val(rows);
+    $('form#bimatrix input[name="hidden_n"]').val(cols);
 
-    var btn = document.createElement('button');
-    btn.setAttribute('type', 'submit');
-    btn.className = "btn btn-default run_algo"
-    btn.innerHTML = "GO!"
-    wrap.appendChild(btn);
-
-    var hidden_input_m = document.createElement("input");
-    var hidden_input_n = document.createElement("input");
-    hidden_input_m.setAttribute("type", "hidden");
-    hidden_input_n.setAttribute("type", "hidden");
-    hidden_input_m.setAttribute("name", "hidden_m");
-    hidden_input_n.setAttribute("name", "hidden_n");
-    hidden_input_m.setAttribute("value", rows);
-    hidden_input_n.setAttribute("value", cols);
-
-    wrap.appendChild(hidden_input_m);
-    wrap.appendChild(hidden_input_n);
-
-    function setCSS(i){
-      var el=wrap.childNodes[i];
-      el.style.top=Math.floor(i/cols)*hei+'px';
-      el.style.left=i%cols*wid+'px';
-    }
   };
-
-
-
-
 
 });

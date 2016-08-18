@@ -7,31 +7,64 @@
     <link href={{ url_for('static', filename='styles.css') }} rel="stylesheet" type="text/css"></link>
   </head>
   <body>
-    <div class="container"><h1>Bimatrix Game Solver</h1></div>
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Set number of strategies</h2>
-            <form class="form-inline dimensions" onsubmit="return false;">
-              <div class="form-group">
-                <input type="number" class="form-control" id="number_m" placeholder="m">
-              </div>
-              <div class="form-group">
-                <input type="number" class="form-control" id="number_n" placeholder="n">
-              </div>
-              <button type="submit" class="btn btn-default">Set</button>
-            </form>
-        </div>
-        <div class="col-md-8">
-            <div class="container">
-            <form id="wrapper" onsubmit="return false;"></form>
+    <div class="overlay">
+      <div id="loading-img"></div>
+    </div>
+    <div class="container"><h1 class="main-header">Bimatrix Game Solver</h1></div>
+        <div class="col-md-6">
+            <div class="col-md-1"></div>
+            <div class= "col-md-11">
+            <div class="row">
+              <h2>Set number of strategies</h2>
+              <form class="form-inline dimensions" onsubmit="return false;">
+                <div class="form-group">
+                  <input type="number" required class="form-control" id="number_m" placeholder="m">
+                </div>
+                <div class="form-group">
+                  <input type="number"  required class="form-control" id="number_n" placeholder="n">
+                </div>
+                <button type="submit" class="btn btn-default">Set</button>
+              </form>
+            </div>
+            <div class="row">
+              <h2>Set Payoffs</h2>
+              <form id="bimatrix" onsubmit="return false;">
+                <table id="table"></table>
+                <input type="hidden" name="hidden_m">
+                <input type="hidden" name="hidden_n">
+                <div class="submit-button">
+                  <button type="button" class="btn btn-default random">Random Values</button>
+                  <button type="submit" class="btn btn-default run-algo">GO</button>
+                </div>
+              </form>
+            </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-      <div class="container">
-        <div id="results"></div>
-      </div>
-    </div>
+        <div class="col-md-6">
+          <h2>Results</h2>
+          <div class="results">
+          <h3>Extreme Equilibria</h3>
+            <table id="eq-table" class="table">
+                <thead>
+                  <th>#</th>
+                  <th>Strategy 1</th>
+                  <th>Payoff 1</th>
+                  <th>Strategy 2</th>
+                  <th>Payoff 2</th>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <h3>Equilibrium Components</h3>
+            <table id="comp-table" class="table">
+                <thead>
+                  <th>#</th>
+                  <th>Extreme Equilibria</th>
+                  <th>Index</th>
+                </thead>
+                <tbody></tbody>
+            </table>
+          </div>
+        </div>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script src={{ url_for('static', filename='main.js') }}></script>
