@@ -1,4 +1,11 @@
 archive/
 *.pyc
 index_output
+index_input
+lrsnash_input
+lrsnash_output
+clique_input
+clique_output
+lrsnash
+clique
 venv/
