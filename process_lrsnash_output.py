@@ -11,7 +11,7 @@ for line in f.readlines():
     x[i] = line.split()
     i+=1
 
-number_of_equilibria = int(x[i-7][4])
+number_of_equilibria = int(x[i-6][4])
 
 # store mixed strategies as arrays of string probabilities
 e1 = {}
@@ -38,7 +38,7 @@ eq = -1 # array index of current equilibrium
 
 count = 0 # how many equilibria of II to match with one
 
-for j in range(2,len(x)-7):
+for j in range(2,len(x)-6):
     if not x[j]:
         count = 0 # reset count, ready for next set of II's strategies
         continue
