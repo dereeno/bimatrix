@@ -49,6 +49,6 @@ def write_input_file(form):
 
 # run the server
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
 
 # boom!
