@@ -6,7 +6,6 @@ import game_solver
 import os
 import flask_assets
 
-# initilize flask
 app = Flask(__name__)
 
 env = flask_assets.Environment(app)
@@ -17,7 +16,6 @@ env.load_path = [
     os.path.join(os.path.dirname(__file__), 'coffee'),
     os.path.join(os.path.dirname(__file__), 'bower_components')
 ]
-
 
 env.register(
     'js_all',
@@ -39,7 +37,6 @@ env.register(
         output='css_all.css'
     )
 )
-
 
 @app.route('/favicon.ico')
 def favicon():
