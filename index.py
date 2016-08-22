@@ -52,21 +52,16 @@ class Strategy:
     def get_lexico_feasible_bases(self):
         # u/v are always basic; offset +1 to support indices
         basic_variables = [0] + [i+1 for i in self.support()]
-
         # 'basis_size' will be n+1 for player 1 and m+1 for player 2
         opponent_number_of_pure_strategies = n if self.player == 1 else m
         basis_size = opponent_number_of_pure_strategies + 1
-
         # 'how_many_to_add' gets the number of variables we need to add to form a basis
         how_many_to_add = basis_size - len(basic_variables)
-
         # 'candidates_to_add' gets all possible variables we can add to a basis
         candidates_to_add = \
             [item for item in range(1, m+n+1) if item not in basic_variables]
-
         # 'subsets' gets all subsets of 'candidates_to_add' of size 'how_many_to_add'
         subsets = all_subsets(candidates_to_add, how_many_to_add)
-
         all_bases = []
         for indices_to_add in subsets:
             indices = sorted(basic_variables + list(indices_to_add))
@@ -74,7 +69,6 @@ class Strategy:
 
         lexico_feasible_bases = \
             [basis for basis in all_bases if basis.is_lexico_feasible()]
-
         return lexico_feasible_bases
 
 class Basis:
@@ -130,7 +124,7 @@ class Basis:
                     elif current < 0: # lexico-negative if < 0
                         flag = False
                         break
-                    else: # check next row if this row is lexico-positive
+                    else: # check next row
                         break
         return flag
 
@@ -142,7 +136,7 @@ class Basis:
         basic_variables_vector = self.basic_variables_vector()
         result = []
         j = 0
-        # m+n+1 is the number of components in the variable vector (number of columns)
+        # m+n+1 is the number of components in the variable vector
         for i in range(m+n+1):
             if i in self.indices:
                 result.append(basic_variables_vector[j])
@@ -178,18 +172,15 @@ class PairOfLexicoFeasibleBases:
 
     def get_fulfils_complementarity(self):
         flag = True
-
         for i in range(1, m+1):
             if i in self.alpha.indices and i+n in self.beta.indices:
                 flag = False
                 break
-
         if flag:
             for i in range(1, n+1):
                 if i in self.beta.indices and i+m in self.alpha.indices:
                     flag = False
                     break
-
         return flag
 
     def square_submatrix(self, matrix):
@@ -199,17 +190,14 @@ class PairOfLexicoFeasibleBases:
 
     def sign(self):
         t = len(self.alpha.basic_startegy_variables())
-
         sign_of_A = sign_of_matrix(self.square_submatrix(A).transpose())
         sign_of_B = sign_of_matrix(self.square_submatrix(B))
-
         return (-1)**(t+1) * sign_of_A * sign_of_B
 
 def sign_of_matrix(matrix):
     dimension = matrix.shape[0]
     sign = determinant_sign(matrix)[0] # get the sign of the determinant of 'matrix'
     i = 0
-
     while sign == 0 and i < dimension:
         sign = (-1) * determinant_sign(replace_column_by_1(matrix, i))[0]
         i = i+1
