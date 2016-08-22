@@ -1,19 +1,50 @@
 # imports
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 import json
 import pdb
 import game_solver
 import os
-from flask import send_from_directory
+import flask_assets
 
 # initilize flask
 app = Flask(__name__)
+
+env = flask_assets.Environment(app)
+
+# Tell flask_assets where to look for our coffeescript and sass files.
+env.load_path = [
+    os.path.join(os.path.dirname(__file__), 'sass'),
+    os.path.join(os.path.dirname(__file__), 'coffee'),
+    os.path.join(os.path.dirname(__file__), 'bower_components')
+]
+
+
+env.register(
+    'js_all',
+    flask_assets.Bundle(
+        'jquery/dist/jquery.min.js',
+        flask_assets.Bundle(
+            'all.coffee',
+            filters=['coffeescript']
+        ),
+        output='js_all.js'
+    )
+)
+
+env.register(
+    'css_all',
+    flask_assets.Bundle(
+        'all.sass',
+        filters='sass',
+        output='css_all.css'
+    )
+)
+
 
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
-
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -27,7 +58,6 @@ def home():
 
         return jsonify(data)
     return render_template('index.html')
-
 
 def write_input_file(form):
     matrix_a, matrix_b = form['A'], form['B']
@@ -45,7 +75,6 @@ def write_input_file(form):
             for item in row:
                 file.write(item + " ")
             file.write('\n')
-
 
 # run the server
 if __name__ == '__main__':

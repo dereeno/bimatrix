@@ -1,0 +1,57 @@
+!!!
+%html
+  %head
+    %title Bimatrix Game Solver
+    %link{:href => "", :rel => "shortcut icon"}/
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    %link{:href => "https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css", :media => "screen", :rel => "stylesheet"}/
+    -assets "css_all"
+      %link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"
+  %body
+    .overlay
+      #loading-img
+    .container
+      %h1.main-header Bimatrix Game Solver
+    .col-md-6
+      .col-md-1
+      .col-md-11
+        .row
+          %h4 Set number of strategies
+          %form.form-inline.dimensions{:onsubmit => "return false;"}
+            .form-group
+              %input#number_m.form-control{:placeholder => "m", :required => "", :type => "number"}/
+            .form-group
+              %input#number_n.form-control{:placeholder => "n", :required => "", :type => "number"}/
+            %button.btn.btn-default{:type => "submit"} Set
+        .row
+          %h2 Set Payoffs
+          %form#bimatrix{:onsubmit => "return false;"}
+            %table#table
+            %input{:name => "hidden_m", :type => "hidden"}/
+            %input{:name => "hidden_n", :type => "hidden"}/
+            .submit-button
+              %button.btn.btn-default.random{:type => "button"} Random Values
+              %button.btn.btn-default.run-algo{:type => "submit"} GO
+    .col-md-6
+      %h2 Results
+      .results
+        %h3 Extreme Equilibria
+        %table#eq-table.table
+          %thead
+            %th #
+            %th Strategy 1
+            %th Payoff 1
+            %th Strategy 2
+            %th Payoff 2
+          %tbody
+        %h3 Equilibrium Components
+        %table#comp-table.table
+          %thead
+            %th #
+            %th Extreme Equilibria
+            %th Index
+          %tbody
+    %script{:src => "https://code.jquery.com/jquery-1.11.0.min.js"}
+    %script{:src => "https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"}
+    - assets "js_all"
+      %script src="{{ ASSET_URL }}" type="text/javascript"
