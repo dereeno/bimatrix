@@ -2,7 +2,7 @@ import os
 import sys
 import json
 
-file = 'lrsnash_output'
+file = 'lrs/lrsnash_output'
 
 f= open(file, 'r')
 x={}
@@ -92,7 +92,7 @@ for i in range(number_of_equilibria):
 with open('index_input', 'w') as file:
     file.write(json.dumps(result))
 
-with open('clique_input', 'w') as file:
+with open('clique/clique_input', 'w') as file:
     for i in range(number_of_equilibria):
         file.write("{0} {1}\n".format(index1[i],index2[i]))
 

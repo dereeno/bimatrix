@@ -32,7 +32,7 @@ def home():
 def write_input_file(form):
     matrix_a, matrix_b = form['A'], form['B']
     m, n = form['m'], form['n']
-    with open('lrsnash_input', 'w') as file:
+    with open('lrs/lrsnash_input', 'w') as file:
         file.write(m + ' ' + n + '\n\n')
         for row in json.loads(matrix_a):
             for item in row:
@@ -50,5 +50,3 @@ def write_input_file(form):
 # run the server
 if __name__ == '__main__':
     app.run()
-
-# boom!

@@ -16,7 +16,8 @@ class EquilibriumComponent:
         return index
 
 class Equilibrium:
-    def __init__(self, x, y):
+    # x and y are of type Strategy
+    def __init__(self,x, y):
         self.x = x
         self.y = y
         self.lex_index = self.get_lex_index()
@@ -27,7 +28,6 @@ class Equilibrium:
         y_bases = self.y.lexico_feasible_bases
         for alpha in x_bases:
             for beta in y_bases:
-
                 pair = PairOfLexicoFeasibleBases(alpha, beta)
                 if pair.fulfils_complementarity:
                     lex_index += pair.sign()
@@ -252,7 +252,7 @@ def create_equilibrium_components(all_equilibria, components_hash):
     return result
 
 def parse_lrsnash_input():
-    with open('lrsnash_input') as f:
+    with open('lrs/lrsnash_input') as f:
         lines = [line.split() for line in f.readlines()]
 
     m,n = (int(lines[0][0]),int(lines[0][1]))
@@ -342,7 +342,7 @@ def initialise():
     with open('index_input', 'r') as file:
         equilibria_hash = json.loads(file.read())
 
-    with open('clique_output', 'r') as file:
+    with open('clique/clique_output', 'r') as file:
         components_hash = create_components_hash(file.readlines())
 
     return equilibria_hash, components_hash
