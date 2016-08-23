@@ -1,9 +1,13 @@
 $(document).ready ->
-  validate_less_then_9 = (m, n) ->
-    if m > 9 or n > 9 or m < 0 or n < 0
-      alert 'value must be less then 9'
-      return false
-    true
+
+  $(document).ajaxStart ->
+    $('body').addClass 'loading'
+  $(document).ajaxComplete ->
+    $('body').removeClass 'loading'
+
+  setAttributes = (el, attrs) ->
+    for key, value of attrs
+      el.setAttribute(key, value)
 
   create_matrix = (rows, cols) ->
     d = document.createElement('td')
@@ -17,10 +21,12 @@ $(document).ready ->
       while j < cols
         c = d.cloneNode(false)
         inp1 = document.createElement('input')
-        inp1.setAttribute 'row', i
-        inp1.setAttribute 'col', j
-        inp1.setAttribute 'required', 'true'
-        inp1.setAttribute 'type', 'number'
+        setAttributes inp1,
+          'row': i
+          'col': j
+          'required': 'true'
+          'type': 'number'
+          'min': '0'
         inp2 = inp1.cloneNode(false)
         inp1.className = 'A_entry'
         inp2.className = 'B_entry'
@@ -39,8 +45,7 @@ $(document).ready ->
   $('form.dimensions').on 'submit', ->
     m = $('input#number_m').val()
     n = $('input#number_n').val()
-    if validate_less_then_9(m, n)
-      create_matrix m, n
+    create_matrix m, n
     return
 
   $('form#bimatrix .random').on 'click', ->
@@ -70,44 +75,50 @@ $(document).ready ->
         row.appendChild st2
         row.appendChild pay2
         number.innerHTML = i + 1
-        st1.innerHTML = eq[0]['distribution']
-        st2.innerHTML = eq[1]['distribution']
+        st1.innerHTML = '[ ' + eq[0]['distribution'].join(', ') + ' ]'
+        st2.innerHTML = '[ ' + eq[1]['distribution'].join(', ') + ' ]'
         pay1.innerHTML = eq[0]['payoff']
         pay2.innerHTML = eq[1]['payoff']
       return
 
     show_results = (results) ->
-      # comp_table =document.getElementById('comp-table');
       comp_table = $('#comp-table tbody')[0]
       comp_table.innerHTML = ''
       $.each results, (i, comp_value) ->
         row = document.createElement('tr')
-        cell = document.createElement('td')
-        cell.innerHTML = i + 1
-        row.appendChild cell
+        cell_comp_number = document.createElement('td')
+        cell_comp_number.innerHTML = i + 1
+        row.appendChild cell_comp_number
         comp_table.appendChild row
         eq_cell = document.createElement('td')
         row.appendChild eq_cell
-        $.each comp_value, (eq_name, eq_value) ->
-          if eq_name == 'index'
-            index_cell = document.createElement('td')
-            index_cell.innerHTML = 'index: ' + eq_value
-            row.appendChild index_cell
-          else
-            eq_row = document.createElement('tr')
-            cell1 = document.createElement('td')
-            cell2 = document.createElement('td')
-            cell3 = document.createElement('td')
-            cell2.innerHTML = ', x: [' + eq_value['x'] + ']'
-            cell3.innerHTML = ', y: [' + eq_value['y'] + ']'
-            cell1.innerHTML = 'lex-index: ' + eq_value['lexindex']
-            eq_row.appendChild cell1
-            eq_row.appendChild cell2
-            eq_row.appendChild cell3
-            eq_cell.appendChild eq_row
-          return
-        return
-      return
+        table = document.createElement('table')
+        eq_cell.appendChild(table)
+        table.className = 'table table-bordered'
+        thead = document.createElement('thead')
+        table.appendChild(thead)
+        number_header = document.createElement('th')
+        number_header.innerHTML = 'number'
+        thead.appendChild(number_header)
+        lex_index_header = document.createElement('th')
+        lex_index_header.innerHTML = 'lex-index'
+        thead.appendChild(lex_index_header)
+        tbody = document.createElement('tbody')
+        table.appendChild(tbody)
+
+        $.each comp_value['equilibria'], (j, eq_hash) ->
+          eq_row = document.createElement('tr')
+          cell1 = document.createElement('td')
+          cell2 = document.createElement('td')
+          cell1.innerHTML = eq_hash['eq_number']
+          cell2.innerHTML = eq_hash['lex_index']
+          eq_row.appendChild cell1
+          eq_row.appendChild cell2
+          tbody.appendChild eq_row
+
+        index_cell = document.createElement('td')
+        index_cell.innerHTML = comp_value['index']
+        row.appendChild index_cell
 
     collect_matrix = (rows, cols) ->
       A_values = []
@@ -131,7 +142,7 @@ $(document).ready ->
     rows = $(this).find('input[name="hidden_m"]').val()
     cols = $(this).find('input[name="hidden_n"]').val()
     matrices = collect_matrix(parseInt(rows), parseInt(cols))
-    $('.overlay').show()
+
     $.ajax
       type: 'POST'
       url: '/'
@@ -141,13 +152,11 @@ $(document).ready ->
         'm': rows
         'n': cols
       success: (results) ->
-        # console.log(results);
         build_equilbria_table results['equilibria']
         show_results results['components']
         return
       error: (error) ->
         console.log error
         return
-    $('.overlay').hide()
     return
   return

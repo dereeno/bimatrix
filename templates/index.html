@@ -5,59 +5,62 @@
     <link href='' rel='shortcut icon'>
     <meta content='width=device-width, initial-scale=1.0' name='viewport'>
     <link href='https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css' media='screen' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     {% assets "css_all" %}
     <link href='{{ ASSET_URL }}' rel='stylesheet' type='text/css'>
     {% endassets %}
   </head>
   <body>
-    <div class='container'>
-      <h1 class='main-header'>Bimatrix Game Solver2</h1>
+    <div class='container header'>
+      <h1>Bimatrix Game Solver</h1>
     </div>
     <div class='col-md-6'>
       <div class='col-md-1'></div>
       <div class='col-md-11'>
-        <div class='row'>
-          <h2>Set number of strategies</h2>
+          <h2>number of strategies</h2>
           <form class='form-inline dimensions' onsubmit='return false;'>
             <div class='form-group'>
-              <input class='form-control' id='number_m' placeholder='m' required='' type='number'>
+              <input class='form-control' id='number_m' placeholder='m' required='' type='number' min='0' max='9'>
             </div>
             <div class='form-group'>
-              <input class='form-control' id='number_n' placeholder='n' required='' type='number'>
+              <input class='form-control' id='number_n' placeholder='n' required='' type='number' min='0' max='9'>
             </div>
             <button class='btn btn-default' type='submit'>Set</button>
           </form>
-        </div>
-        <div class='row'>
-          <h2>Set Payoffs</h2>
+          <h2>Payoff Matrix</h2>
           <form id='bimatrix' onsubmit='return false;'>
             <table id='table'></table>
             <input name='hidden_m' type='hidden'>
             <input name='hidden_n' type='hidden'>
             <div class='submit-button'>
-              <button class='btn btn-default random' type='button'>Random Values</button>
-              <button class='btn btn-default run-algo' type='submit'>GO</button>
+              <button class='btn btn-default random' type='button'>Random Payoffs</button>
+              <button class='btn btn-primary ui-widget ui-button run-algo' data-loading-text="Loading..." type='submit'>GO</button>
             </div>
           </form>
-        </div>
       </div>
     </div>
     <div class='col-md-6'>
       <div class='results'>
         <h2>Results</h2>
-        <h3>Extreme Equilibria</h3>
-        <table class='table' id='eq-table'>
+        <h2>Extreme Equilibria</h2>
+        <table class='table table-bordered' id='eq-table'>
           <thead>
-            <th>#</th>
-            <th>Strategy 1</th>
-            <th>Payoff 1</th>
-            <th>Strategy 2</th>
-            <th>Payoff 2</th>
+            <tr class='first'>
+              <th rowspan="2">#</th>
+              <th colspan="2">Player 1</th>
+              <th colspan="2">Player 2</th>
+            </tr>
+            <tr>
+              <th>Strategy</th>
+              <th>Payoff</th>
+              <th>Strategy</th>
+              <th>Payoff</th>
+            </tr>
           </thead>
           <tbody></tbody>
         </table>
-        <h3>Equilibrium Components</h3>
-        <table class='table' id='comp-table'>
+        <h2>Equilibrium Components</h2>
+        <table class='table table-bordered' id='comp-table'>
           <thead>
             <th>#</th>
             <th>Extreme Equilibria</th>
@@ -67,6 +70,7 @@
         </table>
       </div>
     </div>
+    <div class="modal"></div>
     {% assets "js_all" %}
     <script type="text/javascript" src="{{ ASSET_URL }}"></script>
     {% endassets %}

@@ -20,7 +20,7 @@ env.load_path = [
 env.register(
     'js_all',
     flask_assets.Bundle(
-        'jquery/dist/jquery.min.js',
+        'jquery/dist/jquery.min.js', 'jquery-ui/jquery-ui.min.js',
         flask_assets.Bundle(
             'all.coffee',
             filters=['coffeescript']

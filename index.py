@@ -335,20 +335,17 @@ def initialise():
 
     return equilibria_hash, components_hash
 
-def write_results(components, equilibria_hash):
+def write_results(components, equilibria_hash, all_equilibria):
     result = {}
     result['equilibria'] = equilibria_hash
     result['components'] = []
     for comp_number, component in enumerate(components):
-        result['components'].append({})
-        for eq_number, eq in enumerate(component.extreme_equilibria):
-            result['components'][comp_number]["eq" + str(eq_number)] = {}
-            result['components'][comp_number]["eq" + str(eq_number)]['x'] = ['%s' % s for s in eq.x.distribution]
-            result['components'][comp_number]["eq" + str(eq_number)]['y'] = ['%s' % s for s in eq.y.distribution]
-            result['components'][comp_number]["eq" + str(eq_number)]['lexindex'] = eq.lex_index
-
-        index  = component.index()
-        result['components'][comp_number]['index'] = index
+        result['components'].append({'index': component.index()})
+        current = result['components'][comp_number]
+        current['equilibria'] = []
+        for eq in component.extreme_equilibria:
+            eq_number = all_equilibria.index(eq) + 1
+            current['equilibria'].append({'eq_number': eq_number, 'lex_index': eq.lex_index})
 
     with open('index_output', 'w') as file:
         file.write(json.dumps(result))
@@ -357,6 +354,6 @@ def main():
     equilibria_hash, components_hash = initialise()
     all_equilibria = create_all_equilibria(equilibria_hash)
     components = create_equilibrium_components(all_equilibria, components_hash)
-    write_results(components, equilibria_hash)
+    write_results(components, equilibria_hash, all_equilibria)
 
 if __name__ == "__main__": main()

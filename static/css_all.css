@@ -1,38 +1,83 @@
 /* line 1 */
-.container {
-  max-width: 500px;
-  padding-top: 20px;
+* {
+  font-family: montserrat;
 }
 
-/* line 5 */
-.main-header {
-  padding-bottom: 30px;
+/* line 4 */
+html, body {
+  height: 100%;
 }
 
-/* line 8 */
+/* line 6 */
+h1 {
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: normal;
+}
+
+/* line 11 */
+h2 {
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+/* line 15 */
+table.table tbody tr td {
+  vertical-align: middle;
+}
+
+/* line 18 */
+#eq-table tr th, #eq-table tr td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* line 22 */
+#eq-table tr.first th {
+  border-bottom: none;
+}
+
+/* line 25 */
+.container.header {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 30px;
+  margin-bottom: 30px;
+  border-bottom: #eee 1px solid;
+  margin: 0;
+  width: initial;
+}
+
+/* line 34 */
+.col-md-6 {
+  height: 100%;
+  border-right: #eee 1px solid;
+}
+
+/* line 38 */
 input {
   text-align: center;
   max-width: 45px;
 }
 
-/* line 12 */
+/* line 42 */
 .dimensions input {
   width: 40px;
 }
 
-/* line 15 */
+/* line 45 */
 .cell {
   border: 1px solid black;
   height: 70px;
   width: 70px;
 }
-/* line 19 */
+/* line 49 */
 .cell input {
   height: 30px;
   width: 30px;
 }
 
-/* line 23 */
+/* line 53 */
 .A_entry {
   float: left;
   position: relative;
@@ -40,7 +85,29 @@ input {
   left: 2px;
 }
 
-/* line 29 */
+/* line 59 */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.8) url("http://sampsonresume.com/labs/pIkfp.gif") 50% 50% no-repeat;
+}
+
+/* line 69 */
+body.loading {
+  overflow: hidden;
+}
+
+/* line 72 */
+body.loading .modal {
+  display: block;
+}
+
+/* line 77 */
 .B_entry {
   float: right;
   position: relative;
@@ -48,38 +115,37 @@ input {
   right: 2px;
 }
 
-/* line 35 */
+/* line 83 */
 .submit-button button {
-  width: 120px;
+  width: 140px;
   height: 50px;
 }
 
-/* line 39 */
+/* line 87 */
 #bimatrix {
   margin: 0;
 }
 
-/* line 42 */
+/* line 90 */
 .center {
   margin: auto;
   width: 50%;
 }
 
-/* line 46 */
+/* line 94 */
 .submit-button {
   float: left;
-  padding-left: 30px;
   position: absolute;
-  top: 55px;
+  top: 10px;
   right: 0px;
 }
 
-/* line 53 */
+/* line 100 */
 #table {
   float: left;
 }
 
-/* line 57 */
+/* line 104 */
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -87,7 +153,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   margin: 0;
 }
 
-/* line 63 */
+/* line 110 */
 .loader {
   border: 16px solid #f3f3f3;
   /* Light grey */
