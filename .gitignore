@@ -9,6 +9,6 @@ clique_output
 lrsnash
 clique/clique
 venv/
-ccs_all.css
 js_all.js
 static/.webassets-cache/
+css_all.css
