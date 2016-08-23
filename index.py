@@ -4,6 +4,7 @@ from itertools import combinations as all_subsets
 from fractions import Fraction
 import json
 from numpy import zeros
+import pdb
 
 class EquilibriumComponent:
     def __init__(self, extreme_equilibria):

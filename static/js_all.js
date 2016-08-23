@@ -75,15 +75,20 @@ $(document).ready(function() {
     create_matrix(m, n);
   });
   $('form#bimatrix .random').on('click', function() {
-    $.each($('form#bimatrix').find(':input:not([type=hidden])'), function(index, input) {
+    $('.results').hide();
+    return $.each($('form#bimatrix').find(':input:not([type=hidden])'), function(index, input) {
       var rand;
       rand = Math.floor(Math.random() * 10) + 1;
-      $(input).val(rand);
+      return $(input).val(rand);
     });
-    return false;
+  });
+  $('form#bimatrix .clear').on('click', function() {
+    $('.results').hide();
+    return $('form#bimatrix').find(':input:not([type=hidden])').val('');
   });
   $('form#bimatrix').on('submit', function() {
     var build_equilbria_table, collect_matrix, cols, matrices, rows, show_results;
+    $('.results').hide();
     build_equilbria_table = function(equilibria) {
       var eq_table;
       eq_table = $('#eq-table tbody')[0];
@@ -121,10 +126,11 @@ $(document).ready(function() {
         row.appendChild(cell_comp_number);
         comp_table.appendChild(row);
         eq_cell = document.createElement('td');
+        eq_cell.className = 'small-eq-table';
         row.appendChild(eq_cell);
         table = document.createElement('table');
         eq_cell.appendChild(table);
-        table.className = 'table table-bordered';
+        table.className = 'table';
         thead = document.createElement('thead');
         table.appendChild(thead);
         number_header = document.createElement('th');
@@ -185,6 +191,7 @@ $(document).ready(function() {
       success: function(results) {
         build_equilbria_table(results['equilibria']);
         show_results(results['components']);
+        $('.results').show();
       },
       error: function(error) {
         console.log(error);

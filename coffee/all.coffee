@@ -49,14 +49,18 @@ $(document).ready ->
     return
 
   $('form#bimatrix .random').on 'click', ->
+    $('.results').hide()
     $.each $('form#bimatrix').find(':input:not([type=hidden])'), (index, input) ->
       rand = Math.floor(Math.random() * 10) + 1
       $(input).val rand
-      return
-    false
+
+  $('form#bimatrix .clear').on 'click', ->
+    $('.results').hide()
+    $('form#bimatrix').find(':input:not([type=hidden])').val('')
+
 
   $('form#bimatrix').on 'submit', ->
-
+    $('.results').hide()
     build_equilbria_table = (equilibria) ->
       eq_table = $('#eq-table tbody')[0]
       eq_table.innerHTML = ''
@@ -91,10 +95,11 @@ $(document).ready ->
         row.appendChild cell_comp_number
         comp_table.appendChild row
         eq_cell = document.createElement('td')
+        eq_cell.className = 'small-eq-table'
         row.appendChild eq_cell
         table = document.createElement('table')
         eq_cell.appendChild(table)
-        table.className = 'table table-bordered'
+        table.className = 'table'
         thead = document.createElement('thead')
         table.appendChild(thead)
         number_header = document.createElement('th')
@@ -154,6 +159,7 @@ $(document).ready ->
       success: (results) ->
         build_equilbria_table results['equilibria']
         show_results results['components']
+        $('.results').show()
         return
       error: (error) ->
         console.log error

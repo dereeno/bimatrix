@@ -11,33 +11,36 @@
     {% endassets %}
   </head>
   <body>
+    <div class='wrap'>
     <div class='container header'>
       <h1>Bimatrix Game Solver</h1>
     </div>
     <div class='col-md-6'>
-      <div class='col-md-1'></div>
-      <div class='col-md-11'>
-          <h2>number of strategies</h2>
-          <form class='form-inline dimensions' onsubmit='return false;'>
-            <div class='form-group'>
-              <input class='form-control' id='number_m' placeholder='m' required='' type='number' min='0' max='9'>
-            </div>
-            <div class='form-group'>
-              <input class='form-control' id='number_n' placeholder='n' required='' type='number' min='0' max='9'>
-            </div>
-            <button class='btn btn-default' type='submit'>Set</button>
-          </form>
-          <h2>Payoff Matrix</h2>
-          <form id='bimatrix' onsubmit='return false;'>
-            <table id='table'></table>
-            <input name='hidden_m' type='hidden'>
-            <input name='hidden_n' type='hidden'>
-            <div class='submit-button'>
-              <button class='btn btn-default random' type='button'>Random Payoffs</button>
-              <button class='btn btn-primary ui-widget ui-button run-algo' data-loading-text="Loading..." type='submit'>GO</button>
-            </div>
-          </form>
-      </div>
+      <h2>number of strategies</h2>
+      <form class='form-inline dimensions' onsubmit='return false;'>
+        <div class='form-group'>
+          <input class='form-control' id='number_m' placeholder='m' required='' type='number' min='0' max='9'>
+        </div>
+        <div class='form-group'>
+          <input class='form-control' id='number_n' placeholder='n' required='' type='number' min='0' max='9'>
+        </div>
+        <button class='btn btn-default' type='submit'>Set</button>
+      </form>
+      <form id='bimatrix' onsubmit='return false;'>
+        <div class='testing'>
+        <h2>Payoff Matrix</h2>
+        <div class='payoff-matrix-buttons'>
+          <button class='btn btn-default random' type='button'>Random Payoffs</button>
+        <button type='button' class='btn btn-default clear'>Clear</button>
+        </div>
+        </div>
+        <table id='table'></table>
+        <input name='hidden_m' type='hidden'>
+        <input name='hidden_n' type='hidden'>
+        <div class='submit-button'>
+          <button class='btn btn-warning run-algo' type='submit'>GO</button>
+        </div>
+      </form>
     </div>
     <div class='col-md-6'>
       <div class='results'>
@@ -71,6 +74,14 @@
       </div>
     </div>
     <div class="modal"></div>
+  </div>
+  <footer class="footer">
+    <div class='container'>
+      <div class='text'>
+      This program uses an implementation of a lexico-graphic reverse search algorithm by D. Avis and the maximal clique enumeration algorithm by B. von Stengel for more information visit <a href="http://cgm.cs.mcgill.ca/~avis/C/lrs.html">here</a> and <a href="http://www.maths.lse.ac.uk/personal/stengel/">here</a>
+      </div>
+    </div>
+  </footer>
     {% assets "js_all" %}
     <script type="text/javascript" src="{{ ASSET_URL }}"></script>
     {% endassets %}
