@@ -4,7 +4,6 @@ from itertools import combinations as all_subsets
 from fractions import Fraction
 import json
 from numpy import zeros
-import pdb
 
 class EquilibriumComponent:
     def __init__(self, extreme_equilibria):
@@ -260,12 +259,10 @@ def parse_lrsnash_input():
     return m,n,A,B
 
 def find_eq_by_numbers(number1, number2, all_equilibria):
-    result = None
-    for i in range(len(all_equilibria)):
-        current_eq = all_equilibria[i]
-        if current_eq.x.number == number1 and current_eq.y.number == number2:
-            result = current_eq
-    return result
+    for eq in all_equilibria:
+        if eq.x.number == number1 and eq.y.number == number2:
+            return eq
+    return None
 
 def create_matrix(player):
         if player == 1:
