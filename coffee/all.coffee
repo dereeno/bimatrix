@@ -46,7 +46,9 @@ $(document).ready ->
     m = $('input#number_m').val()
     n = $('input#number_n').val()
     create_matrix m, n
-    return
+
+  $('form.dimensions input').on 'focus', ->
+    $(this).val('')
 
   $('form#bimatrix .random').on 'click', ->
     $('.results').hide()
@@ -57,7 +59,6 @@ $(document).ready ->
   $('form#bimatrix .clear').on 'click', ->
     $('.results').hide()
     $('form#bimatrix').find(':input:not([type=hidden])').val('')
-
 
   $('form#bimatrix').on 'submit', ->
     $('.results').hide()
