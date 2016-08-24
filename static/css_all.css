@@ -1,0 +1,217 @@
+/* line 1 */
+* {
+  font-family: montserrat;
+}
+
+/* line 4 */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+/* line 8 */
+h1 {
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: normal;
+}
+
+/* line 13 */
+h2 {
+  font-size: 16px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+
+/* line 18 */
+.wrap {
+  min-height: 100%;
+  margin-bottom: -40px;
+  padding-bottom: 50px;
+}
+
+/* line 23 */
+.results {
+  display: none;
+}
+
+/* line 26 */
+.footer {
+  width: 100%;
+  height: 40px;
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+}
+/* line 32 */
+.footer .text {
+  color: #777;
+  font-size: 11px;
+}
+
+/* line 36 */
+table.table tbody tr td {
+  vertical-align: middle;
+}
+
+/* line 39 */
+#eq-table tr th, #eq-table tr td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* line 43 */
+#eq-table tr.first th {
+  border-bottom: none;
+}
+
+/* line 46 */
+table#comp-table {
+  margin-bottom: 40p;
+}
+
+/* line 49 */
+#table {
+  margin-bottom: 40px;
+  float: left;
+}
+
+/* line 53 */
+#comp-table .small-eq-table {
+  padding: 3px;
+}
+/* line 55 */
+#comp-table .small-eq-table table {
+  margin: 0;
+}
+
+/* line 58 */
+#comp-table tr th, #comp-table tr td {
+  text-align: center;
+}
+
+/* line 61 */
+.container.header {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 30px;
+  margin-bottom: 30px;
+  border-bottom: #eee 1px solid;
+  margin: 0;
+  width: initial;
+  color: white;
+  background-color: #2b3e50;
+}
+
+/* line 72 */
+.col-md-6 {
+  min-height: 100%;
+  border-left: #eee 1px solid;
+  border-right: #eee 1px solid;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* line 79 */
+input {
+  text-align: center;
+  max-width: 45px;
+}
+
+/* line 83 */
+.dimensions input {
+  width: 40px;
+}
+
+/* line 86 */
+.cell {
+  border: 1px solid black;
+  height: 70px;
+  width: 70px;
+}
+/* line 90 */
+.cell input {
+  height: 30px;
+  width: 30px;
+}
+
+/* line 94 */
+.A_entry {
+  float: left;
+  position: relative;
+  top: 18px;
+  left: 2px;
+}
+
+/* line 100 */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.8) url("http://sampsonresume.com/labs/pIkfp.gif") 50% 50% no-repeat;
+}
+
+/* line 110 */
+body.loading {
+  overflow: hidden;
+}
+
+/* line 113 */
+body.loading .modal {
+  display: block;
+}
+
+/* line 116 */
+.B_entry {
+  float: right;
+  position: relative;
+  bottom: 18px;
+  right: 2px;
+}
+
+/* line 122 */
+#bimatrix {
+  margin: 0;
+}
+
+/* line 125 */
+.submit-button {
+  float: left;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+/* line 130 */
+.submit-button button {
+  width: 140px;
+  height: 50px;
+}
+
+/* line 134 */
+.payoff-matrix-buttons {
+  float: left;
+  position: absolute;
+  top: 97px;
+  right: 10px;
+}
+/* line 139 */
+.payoff-matrix-buttons button {
+  margin-left: 10px;
+}
+
+/* line 143 */
+.wrap button.btn:focus {
+  outline: none;
+}
+
+/* line 148 */
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
