@@ -84,7 +84,7 @@ $(document).ready(function() {
     return $('form#bimatrix-form').find(':input:not([type=hidden])').val('');
   });
   $('form#bimatrix-form').on('submit', function() {
-    var build_components_table, build_equilbria_table, collect_matrix, cols, matrices, rows;
+    var build_components_table, build_equilbria_table, collect_matrix_data, cols, matrices, rows;
     $('.results').hide();
     build_equilbria_table = function(equilibria) {
       var eq_table;
@@ -154,7 +154,7 @@ $(document).ready(function() {
         return row.appendChild(index_cell);
       });
     };
-    collect_matrix = function(rows, cols) {
+    collect_matrix_data = function(rows, cols) {
       var A_values, B_values, form, i, j;
       A_values = [];
       B_values = [];
@@ -175,7 +175,7 @@ $(document).ready(function() {
     };
     rows = $(this).find('input[name="hidden_m"]').val();
     cols = $(this).find('input[name="hidden_n"]').val();
-    matrices = collect_matrix(parseInt(rows), parseInt(cols));
+    matrices = collect_matrix_data(parseInt(rows), parseInt(cols));
     return $.ajax({
       type: 'POST',
       url: '/',
