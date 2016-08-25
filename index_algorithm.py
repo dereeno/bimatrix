@@ -282,7 +282,7 @@ def create_matrix(player):
             zero_row[i-1] = 1
             result[i,:] = [-1] + payoff_matrix[i-1].tolist() + zero_row.tolist()
 
-        return  result
+        return result
 
 def create_components_hash(raw_clique_output):
     raw_clique_output = [item.split() for item in raw_clique_output if item != '\n']
