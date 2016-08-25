@@ -36,17 +36,17 @@ h2
 table.table tbody tr td
   vertical-align: middle
 
-#eq-table tr th, #eq-table tr td
+#eq-table tr
+  th, td
   text-align: center
   vertical-align: middle
-
-#eq-table tr.first th
-  border-bottom: none
+  &.first th
+    border-bottom: none
 
 table#comp-table
   margin-bottom: 40p
 
-#table
+#bimatrix-table
   margin-bottom: 40px
   float: left
 
@@ -119,7 +119,7 @@ body.loading .modal
   bottom: 18px
   right: 2px
 
-#bimatrix
+#bimatrix-form
   margin: 0
 
 .submit-button

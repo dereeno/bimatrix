@@ -11,7 +11,7 @@ $(document).ready ->
 
   create_matrix = (rows, cols) ->
     d = document.createElement('td')
-    bimatrix = document.getElementById('table')
+    bimatrix = document.getElementById('bimatrix-table')
     d.className = 'cell'
     bimatrix.innerHTML = ''
     i = 0
@@ -36,8 +36,8 @@ $(document).ready ->
         j++
       bimatrix.appendChild row
       i++
-    $('form#bimatrix input[name="hidden_m"]').val rows
-    $('form#bimatrix input[name="hidden_n"]').val cols
+    $('form#bimatrix-form input[name="hidden_m"]').val rows
+    $('form#bimatrix-form input[name="hidden_n"]').val cols
     return
 
   create_matrix 2, 2
@@ -50,17 +50,17 @@ $(document).ready ->
   $('form.dimensions input').on 'focus', ->
     $(this).val('')
 
-  $('form#bimatrix .random').on 'click', ->
+  $('form#bimatrix-form .random').on 'click', ->
     $('.results').hide()
-    $.each $('form#bimatrix').find(':input:not([type=hidden])'), (index, input) ->
+    $.each $('form#bimatrix-form').find(':input:not([type=hidden])'), (index, input) ->
       rand = Math.floor(Math.random() * 10) + 1
       $(input).val rand
 
-  $('form#bimatrix .clear').on 'click', ->
+  $('form#bimatrix-form .clear').on 'click', ->
     $('.results').hide()
-    $('form#bimatrix').find(':input:not([type=hidden])').val('')
+    $('form#bimatrix-form').find(':input:not([type=hidden])').val('')
 
-  $('form#bimatrix').on 'submit', ->
+  $('form#bimatrix-form').on 'submit', ->
     $('.results').hide()
     build_equilbria_table = (equilibria) ->
       eq_table = $('#eq-table tbody')[0]
@@ -129,7 +129,7 @@ $(document).ready ->
     collect_matrix = (rows, cols) ->
       A_values = []
       B_values = []
-      form = $('form#bimatrix')
+      form = $('form#bimatrix-form')
       i = 0
       while i < rows
         A_values.push []
@@ -140,10 +140,7 @@ $(document).ready ->
           B_values[i].push form.find('input[row=' + i + '][col=' + j + '].B_entry').val()
           j++
         i++
-      [
-        A_values
-        B_values
-      ]
+      [A_values, B_values]
 
     rows = $(this).find('input[name="hidden_m"]').val()
     cols = $(this).find('input[name="hidden_n"]').val()

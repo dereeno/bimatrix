@@ -55,11 +55,10 @@ table.table tbody tr td {
 }
 
 /* line 39 */
-#eq-table tr th, #eq-table tr td {
+#eq-table tr {
   text-align: center;
   vertical-align: middle;
 }
-
 /* line 43 */
 #eq-table tr.first th {
   border-bottom: none;
@@ -71,7 +70,7 @@ table#comp-table {
 }
 
 /* line 49 */
-#table {
+#bimatrix-table {
   margin-bottom: 40px;
   float: left;
 }
@@ -174,7 +173,7 @@ body.loading .modal {
 }
 
 /* line 122 */
-#bimatrix {
+#bimatrix-form {
   margin: 0;
 }
 

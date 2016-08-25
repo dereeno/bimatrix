@@ -36,7 +36,7 @@ $(document).ready(function() {
   create_matrix = function(rows, cols) {
     var bimatrix, c, d, i, inp1, inp2, j, row;
     d = document.createElement('td');
-    bimatrix = document.getElementById('table');
+    bimatrix = document.getElementById('bimatrix-table');
     d.className = 'cell';
     bimatrix.innerHTML = '';
     i = 0;
@@ -64,8 +64,8 @@ $(document).ready(function() {
       bimatrix.appendChild(row);
       i++;
     }
-    $('form#bimatrix input[name="hidden_m"]').val(rows);
-    $('form#bimatrix input[name="hidden_n"]').val(cols);
+    $('form#bimatrix-form input[name="hidden_m"]').val(rows);
+    $('form#bimatrix-form input[name="hidden_n"]').val(cols);
   };
   create_matrix(2, 2);
   $('form.dimensions').on('submit', function() {
@@ -77,19 +77,19 @@ $(document).ready(function() {
   $('form.dimensions input').on('focus', function() {
     return $(this).val('');
   });
-  $('form#bimatrix .random').on('click', function() {
+  $('form#bimatrix-form .random').on('click', function() {
     $('.results').hide();
-    return $.each($('form#bimatrix').find(':input:not([type=hidden])'), function(index, input) {
+    return $.each($('form#bimatrix-form').find(':input:not([type=hidden])'), function(index, input) {
       var rand;
       rand = Math.floor(Math.random() * 10) + 1;
       return $(input).val(rand);
     });
   });
-  $('form#bimatrix .clear').on('click', function() {
+  $('form#bimatrix-form .clear').on('click', function() {
     $('.results').hide();
-    return $('form#bimatrix').find(':input:not([type=hidden])').val('');
+    return $('form#bimatrix-form').find(':input:not([type=hidden])').val('');
   });
-  $('form#bimatrix').on('submit', function() {
+  $('form#bimatrix-form').on('submit', function() {
     var build_equilbria_table, collect_matrix, cols, matrices, rows, show_results;
     $('.results').hide();
     build_equilbria_table = function(equilibria) {
@@ -164,7 +164,7 @@ $(document).ready(function() {
       var A_values, B_values, form, i, j;
       A_values = [];
       B_values = [];
-      form = $('form#bimatrix');
+      form = $('form#bimatrix-form');
       i = 0;
       while (i < rows) {
         A_values.push([]);
