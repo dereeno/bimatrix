@@ -24,12 +24,12 @@ class Equilibrium:
 
     def get_lex_index(self):
         lex_index = 0
-        x_bases = self.x.lexico_feasible_bases
-        y_bases = self.y.lexico_feasible_bases
+        x_bases = self.x.lexico_feasible_bases()
+        y_bases = self.y.lexico_feasible_bases()
         for alpha in x_bases:
             for beta in y_bases:
                 pair = PairOfLexicoFeasibleBases(alpha, beta)
-                if pair.fulfils_complementarity:
+                if pair.fulfils_complementarity():
                     lex_index += pair.sign()
         return lex_index
 
@@ -39,8 +39,6 @@ class Strategy:
         self.distribution = distribution
         self.payoff = payoff
         self.number = number
-        self.number_of_pure_strategies = m if player == 1 else n
-        self.lexico_feasible_bases = self.get_lexico_feasible_bases()
 
     def support(self):
         result = []
@@ -49,7 +47,7 @@ class Strategy:
                 result.append(index)
         return result
 
-    def get_lexico_feasible_bases(self):
+    def lexico_feasible_bases(self):
         # u/v are always basic; offset +1 to support indices
         basic_variables = [0] + [i+1 for i in self.support()]
         # 'basis_size' will be n+1 for player 1 and m+1 for player 2
@@ -76,7 +74,7 @@ class Basis:
         self.indices = indices
         self.strategy = strategy
         self.player = self.strategy.player
-        self.number_of_pure_strategies = strategy.number_of_pure_strategies
+        self.number_of_pure_strategies = m if self.player == 1 else n
         self.matrix = matrix_1 if self.player == 1 else matrix_2
         self.basic_matrix_inverse = self.get_basic_matrix_inverse()
 
@@ -116,7 +114,9 @@ class Basis:
         flag = True
         dimension = self.basic_matrix_inverse.shape[0]
         for row in range(dimension):
-            if flag == True:
+            if flag == False:
+                break
+            else:
                 for column in range(dimension):
                     current = round(self.basic_matrix_inverse[row][column], 5)
                     if current == 0: # move to next coordinate if 0
@@ -168,9 +168,8 @@ class PairOfLexicoFeasibleBases:
     def __init__(self, alpha, beta):
         self.alpha = alpha
         self.beta = beta
-        self.fulfils_complementarity = self.get_fulfils_complementarity()
 
-    def get_fulfils_complementarity(self):
+    def fulfils_complementarity(self):
         flag = True
         for i in range(1, m+1):
             if i in self.alpha.indices and i+n in self.beta.indices:
