@@ -1,25 +1,22 @@
 $(document).ready ->
 
-  $(document).ajaxStart ->
-    $('body').addClass 'loading'
-  $(document).ajaxComplete ->
-    $('body').removeClass 'loading'
+
 
   setAttributes = (el, attrs) ->
     for key, value of attrs
       el.setAttribute(key, value)
 
   create_matrix = (rows, cols) ->
-    d = document.createElement('td')
+    toClone = document.createElement('td')
+    toClone.className = 'cell'
     bimatrix = document.getElementById('bimatrix-table')
-    d.className = 'cell'
     bimatrix.innerHTML = ''
     i = 0
     while i < rows
       row = document.createElement('tr')
       j = 0
       while j < cols
-        c = d.cloneNode(false)
+        cell = toClone.cloneNode()
         inp1 = document.createElement('input')
         setAttributes inp1,
           'row': i
@@ -27,12 +24,12 @@ $(document).ready ->
           'required': 'true'
           'type': 'number'
           'min': '0'
-        inp2 = inp1.cloneNode(false)
+        inp2 = inp1.cloneNode()
         inp1.className = 'A_entry'
         inp2.className = 'B_entry'
-        c.appendChild inp1
-        c.appendChild inp2
-        row.appendChild c
+        cell.appendChild(inp1).className = 'A_entry'
+        cell.appendChild(inp2).className = 'B_entry'
+        row.appendChild cell
         j++
       bimatrix.appendChild row
       i++
@@ -86,9 +83,10 @@ $(document).ready ->
         pay2.innerHTML = eq[1]['payoff']
       return
 
-    show_results = (results) ->
+    build_components_table = (results) ->
       comp_table = $('#comp-table tbody')[0]
       comp_table.innerHTML = ''
+
       $.each results, (i, comp_value) ->
         row = document.createElement('tr')
         cell_comp_number = document.createElement('td')
@@ -99,8 +97,8 @@ $(document).ready ->
         eq_cell.className = 'small-eq-table'
         row.appendChild eq_cell
         table = document.createElement('table')
-        eq_cell.appendChild(table)
         table.className = 'table'
+        eq_cell.appendChild(table)
         thead = document.createElement('thead')
         table.appendChild(thead)
         number_header = document.createElement('th')
@@ -126,7 +124,7 @@ $(document).ready ->
         index_cell.innerHTML = comp_value['index']
         row.appendChild index_cell
 
-    collect_matrix = (rows, cols) ->
+    collect_matrix_data = (rows, cols) ->
       A_values = []
       B_values = []
       form = $('form#bimatrix-form')
@@ -144,7 +142,7 @@ $(document).ready ->
 
     rows = $(this).find('input[name="hidden_m"]').val()
     cols = $(this).find('input[name="hidden_n"]').val()
-    matrices = collect_matrix(parseInt(rows), parseInt(cols))
+    matrices = collect_matrix_data(parseInt(rows), parseInt(cols))
 
     $.ajax
       type: 'POST'
@@ -156,11 +154,12 @@ $(document).ready ->
         'n': cols
       success: (results) ->
         build_equilbria_table results['equilibria']
-        show_results results['components']
+        build_components_table results['components']
         $('.results').show()
-        return
       error: (error) ->
         console.log error
-        return
-    return
-  return
+
+  $(document).ajaxStart ->
+    $('body').addClass 'loading'
+  $(document).ajaxComplete ->
+    $('body').removeClass 'loading'
