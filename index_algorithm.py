@@ -348,10 +348,10 @@ def write_results(components, equilibria_hash, all_equilibria):
     with open('index_output', 'w') as file:
         file.write(json.dumps(result))
 
-def main():
+def run():
     equilibria_hash, components_hash = initialise()
     all_equilibria = create_all_equilibria(equilibria_hash)
     components = create_equilibrium_components(all_equilibria, components_hash)
     write_results(components, equilibria_hash, all_equilibria)
 
-if __name__ == "__main__": main()
+if __name__ == "__main__": run()

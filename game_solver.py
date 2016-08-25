@@ -1,5 +1,5 @@
 import os
-import index
+import index_algorithm
 import sys
 
 sys.path.append(os.getcwd())
@@ -17,7 +17,7 @@ def run():
     os.system('./clique/clique < clique/clique_input > clique/clique_output')
 
     #running index calculation
-    index.main()
+    index_algorithm.run()
 
 def compile(filename):
     if filename == 'lrsnash':

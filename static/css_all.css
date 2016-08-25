@@ -145,6 +145,14 @@ input {
 }
 
 /* line 103 */
+.B_entry {
+  float: right;
+  position: relative;
+  bottom: 18px;
+  right: 2px;
+}
+
+/* line 109 */
 .modal {
   display: none;
   position: fixed;
@@ -156,22 +164,14 @@ input {
   background: rgba(255, 255, 255, 0.8);
 }
 
-/* line 113 */
+/* line 119 */
 body.loading {
   overflow: hidden;
 }
 
-/* line 116 */
+/* line 122 */
 body.loading .modal {
   display: block;
-}
-
-/* line 119 */
-.B_entry {
-  float: right;
-  position: relative;
-  bottom: 18px;
-  right: 2px;
 }
 
 /* line 125 */
