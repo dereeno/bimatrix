@@ -1,7 +1,5 @@
 $(document).ready ->
 
-
-
   setAttributes = (el, attrs) ->
     for key, value of attrs
       el.setAttribute(key, value)
@@ -48,13 +46,11 @@ $(document).ready ->
     $(this).val('')
 
   $('form#bimatrix-form .random').on 'click', ->
-    $('.results').hide()
     $.each $('form#bimatrix-form').find(':input:not([type=hidden])'), (index, input) ->
       rand = Math.floor(Math.random() * 10) + 1
       $(input).val rand
 
   $('form#bimatrix-form .clear').on 'click', ->
-    $('.results').hide()
     $('form#bimatrix-form').find(':input:not([type=hidden])').val('')
 
   $('form#bimatrix-form').on 'submit', ->
@@ -159,7 +155,10 @@ $(document).ready ->
       error: (error) ->
         console.log error
 
+  timer = null
   $(document).ajaxStart ->
-    $('body').addClass 'loading'
+    if timer then clearTimeout(timer)
+    timer = setTimeout((-> $('body').addClass 'loading'), 500)
   $(document).ajaxComplete ->
+    clearTimeout(timer)
     $('body').removeClass 'loading'
