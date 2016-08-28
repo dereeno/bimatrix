@@ -235,8 +235,11 @@ def create_equilibrium_components(all_equilibria, components_hash):
     for i in range(len(components_hash)):
         component_nash_subsets = components_hash[i]['nash_subsets']
         component_eq = []
+
         for pair in components_hash[i]['equilibria']:
             component_eq.append(find_eq_by_numbers(pair[0], pair[1], all_equilibria))
+
+        component_eq.sort(key=lambda eq: all_equilibria.index(eq))
         result.append(EquilibriumComponent(component_eq, component_nash_subsets))
     return result
 
