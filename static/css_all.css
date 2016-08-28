@@ -102,62 +102,66 @@ table.table tbody tr td {
 }
 
 /* line 73 */
-#comp-table .second-row th {
-  border-left: none;
+#comp-table .second-row th:not(.with-border) {
   border-right: none;
 }
 
-/* line 77 */
+/* line 76 */
+#comp-table .second-row th {
+  border-left: none;
+}
+
+/* line 79 */
 #comp-table .small-table {
   width: 100%;
 }
-/* line 79 */
+/* line 81 */
 #comp-table .small-table .x, #comp-table .small-table .y {
   width: 40%;
 }
-/* line 81 */
+/* line 83 */
 #comp-table .small-table .central {
   width: 10%;
 }
-/* line 83 */
+/* line 85 */
 #comp-table .small-table td {
   padding: 2px;
 }
-/* line 85 */
+/* line 87 */
 #comp-table .small-table.subsets td {
   padding: 6px 2px;
 }
 
-/* line 88 */
+/* line 90 */
 #comp-table tr th, #comp-table tr td {
   text-align: center;
   vertical-align: middle;
 }
 
-/* line 92 */
+/* line 94 */
 input {
   text-align: center;
   max-width: 45px;
 }
 
-/* line 96 */
+/* line 98 */
 .dimensions input {
   width: 40px;
 }
 
-/* line 99 */
+/* line 101 */
 .cell {
   border: 1px solid black;
   height: 70px;
   width: 70px;
 }
-/* line 103 */
+/* line 105 */
 .cell input {
   height: 30px;
   width: 30px;
 }
 
-/* line 107 */
+/* line 109 */
 .A_entry {
   float: left;
   position: relative;
@@ -165,7 +169,7 @@ input {
   left: 2px;
 }
 
-/* line 113 */
+/* line 115 */
 .B_entry {
   float: right;
   position: relative;
@@ -173,7 +177,7 @@ input {
   right: 2px;
 }
 
-/* line 119 */
+/* line 121 */
 .modal {
   display: none;
   position: fixed;
@@ -185,57 +189,57 @@ input {
   background: rgba(255, 255, 255, 0.8);
 }
 
-/* line 129 */
+/* line 131 */
 body.loading {
   overflow: hidden;
 }
 
-/* line 132 */
+/* line 134 */
 body.loading .modal {
   display: block;
 }
 
-/* line 135 */
+/* line 137 */
 #bimatrix-form {
   margin: 0;
 }
 
-/* line 138 */
+/* line 140 */
 .submit-button {
   float: left;
   position: absolute;
   top: 10px;
   right: 15px;
 }
-/* line 143 */
+/* line 145 */
 .submit-button button {
   width: 140px;
   height: 50px;
 }
 
-/* line 147 */
+/* line 149 */
 .payoff-matrix-buttons {
   float: left;
   position: absolute;
   top: 97px;
   right: 15px;
 }
-/* line 152 */
+/* line 154 */
 .payoff-matrix-buttons button {
   margin-left: 10px;
 }
 
-/* line 156 */
+/* line 158 */
 .wrap button.btn:focus {
   outline: none;
 }
 
-/* line 159 */
+/* line 161 */
 input[type=number] {
   -moz-appearance: textfield;
 }
 
-/* line 163 */
+/* line 165 */
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -243,7 +247,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   margin: 0;
 }
 
-/* line 169 */
+/* line 171 */
 .spinner {
   margin: 100px auto;
   width: 50px;
@@ -251,7 +255,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   text-align: center;
   font-size: 10px;
 }
-/* line 175 */
+/* line 177 */
 .spinner > div {
   background-color: #2b3e50;
   height: 100%;
@@ -260,22 +264,22 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
   animation: sk-stretchdelay 1.2s infinite ease-in-out;
 }
-/* line 182 */
+/* line 184 */
 .spinner .rect2 {
   -webkit-animation-delay: -1.1s;
   animation-delay: -1.1s;
 }
-/* line 185 */
+/* line 187 */
 .spinner .rect3 {
   -webkit-animation-delay: -1s;
   animation-delay: -1s;
 }
-/* line 188 */
+/* line 190 */
 .spinner .rect4 {
   -webkit-animation-delay: -0.9s;
   animation-delay: -0.9s;
 }
-/* line 191 */
+/* line 193 */
 .spinner .rect5 {
   -webkit-animation-delay: -0.8s;
   animation-delay: -0.8s;
