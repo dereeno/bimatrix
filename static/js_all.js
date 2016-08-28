@@ -186,7 +186,7 @@ $(document).ready(function() {
       success: function(results) {
         build_equilbria_table(results['equilibria']);
         build_components_table(results['components']);
-        return $('.results').show();
+        return $('.results').fadeIn();
       },
       error: function(error) {
         return console.log(error);

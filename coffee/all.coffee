@@ -151,7 +151,7 @@ $(document).ready ->
       success: (results) ->
         build_equilbria_table results['equilibria']
         build_components_table results['components']
-        $('.results').show()
+        $('.results').fadeIn()
       error: (error) ->
         console.log error
 
