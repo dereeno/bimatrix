@@ -82,31 +82,23 @@ $(document).ready(function() {
     return $('form#bimatrix-form').find(':input:not([type=hidden])').val('');
   });
   $('form#bimatrix-form').on('submit', function() {
-    var build_components_table, build_equilbria_table, collect_matrix_data, cols, matrices, rows;
+    var append_children, build_components_table, build_equilbria_table, collect_matrix_data, cols, matrices, parse_component, rows;
     $('.results').hide();
     build_equilbria_table = function(equilibria) {
       var eq_table;
       eq_table = $('#eq-table tbody')[0];
       eq_table.innerHTML = '';
-      $.each(equilibria, function(i, eq) {
-        var number, pay1, pay2, row, st1, st2;
+      return $.each(equilibria, function(i, eq) {
+        var row;
         row = document.createElement('tr');
         eq_table.appendChild(row);
-        number = document.createElement('td');
-        st1 = document.createElement('td');
-        pay1 = document.createElement('td');
-        st2 = document.createElement('td');
-        pay2 = document.createElement('td');
-        row.appendChild(number);
-        row.appendChild(st1);
-        row.appendChild(pay1);
-        row.appendChild(st2);
-        row.appendChild(pay2);
-        number.innerHTML = i + 1;
-        st1.innerHTML = '[ ' + eq[0]['distribution'].join(', ') + ' ]';
-        st2.innerHTML = '[ ' + eq[1]['distribution'].join(', ') + ' ]';
-        pay1.innerHTML = eq[0]['payoff'];
-        return pay2.innerHTML = eq[1]['payoff'];
+        (row.appendChild(document.createElement('td'))).innerHTML = i + 1;
+        (row.appendChild(document.createElement('td'))).innerHTML = 'x<sup>' + eq[0]['number'] + '</sup>';
+        (row.appendChild(document.createElement('td'))).innerHTML = '[' + eq[0]['distribution'].join(', ') + ']';
+        (row.appendChild(document.createElement('td'))).innerHTML = eq[0]['payoff'];
+        (row.appendChild(document.createElement('td'))).innerHTML = 'y<sup>' + eq[1]['number'] + '</sup>';
+        (row.appendChild(document.createElement('td'))).innerHTML = '[' + eq[1]['distribution'].join(', ') + ']';
+        return (row.appendChild(document.createElement('td'))).innerHTML = eq[1]['payoff'];
       });
     };
     build_components_table = function(results) {
@@ -114,43 +106,80 @@ $(document).ready(function() {
       comp_table = $('#comp-table tbody')[0];
       comp_table.innerHTML = '';
       return $.each(results, function(i, comp_value) {
-        var cell_comp_number, eq_cell, index_cell, lex_index_header, number_header, row, table, tbody, thead;
+        var cell, cell1, cell2, current_row, eq, equilibria, equilibria_cell, equilibria_table, equilibria_tbody, index_cell, k, l, len, len1, number_cell, row, subset, subsets, subsets_cell, subsets_table, subsets_tbody;
         row = document.createElement('tr');
-        cell_comp_number = document.createElement('td');
-        cell_comp_number.innerHTML = i + 1;
-        row.appendChild(cell_comp_number);
         comp_table.appendChild(row);
-        eq_cell = document.createElement('td');
-        eq_cell.className = 'small-eq-table';
-        row.appendChild(eq_cell);
-        table = document.createElement('table');
-        table.className = 'table';
-        eq_cell.appendChild(table);
-        thead = document.createElement('thead');
-        table.appendChild(thead);
-        number_header = document.createElement('th');
-        number_header.innerHTML = 'number';
-        thead.appendChild(number_header);
-        lex_index_header = document.createElement('th');
-        lex_index_header.innerHTML = 'lex-index';
-        thead.appendChild(lex_index_header);
-        tbody = document.createElement('tbody');
-        table.appendChild(tbody);
-        $.each(comp_value['equilibria'], function(j, eq_hash) {
-          var cell1, cell2, eq_row;
-          eq_row = document.createElement('tr');
+        number_cell = document.createElement('td');
+        number_cell.innerHTML = i + 1;
+        subsets = comp_value['nash_subsets'];
+        equilibria = comp_value['equilibria'];
+        subsets_cell = document.createElement('td');
+        subsets_cell.setAttribute('colspan', 3);
+        subsets_cell.className = 'subsets-cell';
+        subsets_table = document.createElement('table');
+        subsets_table.className = 'small-table subsets';
+        subsets_cell.appendChild(subsets_table);
+        subsets_tbody = document.createElement('tbody');
+        subsets_table.appendChild(subsets_tbody);
+        equilibria_cell = document.createElement('td');
+        equilibria_cell.setAttribute('colspan', 2);
+        equilibria_cell.className = 'equilibria-cell';
+        equilibria_table = document.createElement('table');
+        equilibria_cell.appendChild(equilibria_table);
+        equilibria_table.className = 'small-table';
+        equilibria_tbody = document.createElement('tbody');
+        equilibria_table.appendChild(equilibria_tbody);
+        for (k = 0, len = subsets.length; k < len; k++) {
+          subset = subsets[k];
+          current_row = document.createElement('tr');
+          current_row.appendChild(parse_component('x', subset[0]));
+          cell = document.createElement('td');
+          cell.className = 'central';
+          cell.innerHTML = 'X';
+          current_row.appendChild(cell);
+          current_row.appendChild(parse_component('y', subset[1]));
+          subsets_tbody.appendChild(current_row);
+        }
+        for (l = 0, len1 = equilibria.length; l < len1; l++) {
+          eq = equilibria[l];
+          current_row = document.createElement('tr');
           cell1 = document.createElement('td');
           cell2 = document.createElement('td');
-          cell1.innerHTML = eq_hash['eq_number'];
-          cell2.innerHTML = eq_hash['lex_index'];
-          eq_row.appendChild(cell1);
-          eq_row.appendChild(cell2);
-          return tbody.appendChild(eq_row);
-        });
+          cell1.className = 'x';
+          cell2.className = 'y';
+          cell1.innerHTML = eq['eq_number'];
+          cell2.innerHTML = eq['lex_index'];
+          current_row.appendChild(cell1);
+          current_row.appendChild(cell2);
+          equilibria_tbody.appendChild(current_row);
+        }
         index_cell = document.createElement('td');
         index_cell.innerHTML = comp_value['index'];
-        return row.appendChild(index_cell);
+        row.appendChild(index_cell);
+        return append_children(row, [number_cell, subsets_cell, equilibria_cell, index_cell]);
       });
+    };
+    append_children = function(parent, children) {
+      var child, k, len, results1;
+      results1 = [];
+      for (k = 0, len = children.length; k < len; k++) {
+        child = children[k];
+        results1.push(parent.appendChild(child));
+      }
+      return results1;
+    };
+    parse_component = function(player, strategies) {
+      var i, k, len, result, text;
+      text = '{ ';
+      for (k = 0, len = strategies.length; k < len; k++) {
+        i = strategies[k];
+        text += player + '<sup>' + i + '</sup>' + ", ";
+      }
+      text = text.slice(0, -2) + ' }';
+      result = document.createElement('td');
+      result.className = player;
+      result.innerHTML = text;
+      return result;
     };
     collect_matrix_data = function(rows, cols) {
       var A_values, B_values, form, i, j;

@@ -6,8 +6,9 @@ import json
 from numpy import zeros
 
 class EquilibriumComponent:
-    def __init__(self, extreme_equilibria):
+    def __init__(self, extreme_equilibria, nash_subsets):
         self.extreme_equilibria = extreme_equilibria
+        self.nash_subsets = nash_subsets
 
     def index(self):
         index = 0
@@ -146,7 +147,7 @@ class Basis:
 
         return result
 
-    def basic_startegy_variables(self):
+    def basic_strategy_variables(self):
         result = []
         for i in range(1, self.number_of_pure_strategies + 1):
             if i in self.indices: result.append(i-1)
@@ -183,12 +184,12 @@ class PairOfLexicoFeasibleBases:
         return flag
 
     def square_submatrix(self, matrix):
-        alpha_indices = self.alpha.basic_startegy_variables()
-        beta_indices = self.beta.basic_startegy_variables()
+        alpha_indices = self.alpha.basic_strategy_variables()
+        beta_indices = self.beta.basic_strategy_variables()
         return matrix[alpha_indices,:][:,beta_indices]
 
     def sign(self):
-        t = len(self.alpha.basic_startegy_variables())
+        t = len(self.alpha.basic_strategy_variables())
         sign_of_A = sign_of_matrix(self.square_submatrix(A).transpose())
         sign_of_B = sign_of_matrix(self.square_submatrix(B))
         return (-1)**(t+1) * sign_of_A * sign_of_B
@@ -232,10 +233,11 @@ def find_or_create_strategy(player, distribution, payoff, number):
 def create_equilibrium_components(all_equilibria, components_hash):
     result = []
     for i in range(len(components_hash)):
-        component = []
-        for pair in components_hash[i]:
-            component.append(find_eq_by_numbers(pair[0], pair[1], all_equilibria))
-        result.append(EquilibriumComponent(component))
+        component_nash_subsets = components_hash[i]['nash_subsets']
+        component_eq = []
+        for pair in components_hash[i]['equilibria']:
+            component_eq.append(find_eq_by_numbers(pair[0], pair[1], all_equilibria))
+        result.append(EquilibriumComponent(component_eq, component_nash_subsets))
     return result
 
 def parse_lrsnash_input():
@@ -290,17 +292,28 @@ def create_components_hash(raw_clique_output):
     result = {}
     for j in range (len(raw_clique_output)):
         if raw_clique_output[j][0] == "Connected":
-            result[counter] = []
+            result[counter] = {'equilibria': [], 'nash_subsets': []}
             j += 1
             while(j < len(raw_clique_output) and raw_clique_output[j][0] != "Connected"):
                 if raw_clique_output[j]:
-                    result[counter].append(raw_clique_output[j])
+                    result[counter]['equilibria'].append(raw_clique_output[j])
+                    result[counter]['nash_subsets'].append(raw_clique_output[j])
                 j += 1
-            result[counter] = parse_component(result[counter])
+            result[counter]['equilibria'] = parse_component_eq(result[counter]['equilibria'])
+            result[counter]['nash_subsets'] = parse_component_nash_subsets(result[counter]['nash_subsets'])
             counter += 1
     return result
 
-def parse_component(rows):
+def parse_component_nash_subsets(rows):
+    result = []
+    for row in rows:
+        row = ("".join(row)).split('x')
+        player1_strategies = row[0].replace('{','').replace('}','').split(',')
+        player2_strategies = row[1].replace('{','').replace('}','').split(',')
+        result.append([player1_strategies,player2_strategies])
+    return result
+
+def parse_component_eq(rows):
     result = []
     for row in rows:
         row = (" ".join(row)).split('x')
@@ -343,6 +356,7 @@ def write_results(components, equilibria_hash, all_equilibria):
         for eq in component.extreme_equilibria:
             eq_number = all_equilibria.index(eq) + 1
             current['equilibria'].append({'eq_number': eq_number, 'lex_index': eq.lex_index})
+        current['nash_subsets'] = component.nash_subsets
 
     with open('index_output', 'w') as file:
         file.write(json.dumps(result))

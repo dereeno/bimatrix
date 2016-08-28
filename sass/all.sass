@@ -59,8 +59,8 @@ table.table tbody tr td
 
 #eq-table tr
   th, td
-  text-align: center
-  vertical-align: middle
+    text-align: center
+    vertical-align: middle
   &.first th
     border-bottom: none
     vertical-align: middle
@@ -70,10 +70,22 @@ table.table tbody tr td
   margin-bottom: 40px
   float: left
 
-#comp-table .small-eq-table
-  padding: 3px
-  table
-    margin: 0
+#comp-table .second-row th
+  border-left: none
+  border-right: none
+
+#comp-table .small-table,
+  width: 100%
+  .x, .y
+    width: 40%
+  .central
+    width: 10%
+  td
+    padding: 2px
+  &.subsets td
+    padding: 4px 0
+
+
 
 #comp-table tr th, #comp-table tr td
   text-align: center

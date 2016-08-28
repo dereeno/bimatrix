@@ -83,8 +83,8 @@ table.table tbody tr td {
   vertical-align: middle;
 }
 
-/* line 60 */
-#eq-table tr {
+/* line 61 */
+#eq-table tr th, #eq-table tr td {
   text-align: center;
   vertical-align: middle;
 }
@@ -102,43 +102,61 @@ table.table tbody tr td {
 }
 
 /* line 73 */
-#comp-table .small-eq-table {
-  padding: 3px;
-}
-/* line 75 */
-#comp-table .small-eq-table table {
-  margin: 0;
+#comp-table .second-row th {
+  border-left: none;
+  border-right: none;
 }
 
-/* line 78 */
+/* line 77 */
+#comp-table .small-table {
+  width: 100%;
+}
+/* line 79 */
+#comp-table .small-table .x, #comp-table .small-table .y {
+  width: 40%;
+}
+/* line 81 */
+#comp-table .small-table .central {
+  width: 10%;
+}
+/* line 83 */
+#comp-table .small-table td {
+  padding: 2px;
+}
+/* line 85 */
+#comp-table .small-table.subsets td {
+  padding: 4px 0;
+}
+
+/* line 90 */
 #comp-table tr th, #comp-table tr td {
   text-align: center;
 }
 
-/* line 81 */
+/* line 93 */
 input {
   text-align: center;
   max-width: 45px;
 }
 
-/* line 85 */
+/* line 97 */
 .dimensions input {
   width: 40px;
 }
 
-/* line 88 */
+/* line 100 */
 .cell {
   border: 1px solid black;
   height: 70px;
   width: 70px;
 }
-/* line 92 */
+/* line 104 */
 .cell input {
   height: 30px;
   width: 30px;
 }
 
-/* line 96 */
+/* line 108 */
 .A_entry {
   float: left;
   position: relative;
@@ -146,7 +164,7 @@ input {
   left: 2px;
 }
 
-/* line 102 */
+/* line 114 */
 .B_entry {
   float: right;
   position: relative;
@@ -154,7 +172,7 @@ input {
   right: 2px;
 }
 
-/* line 108 */
+/* line 120 */
 .modal {
   display: none;
   position: fixed;
@@ -166,57 +184,57 @@ input {
   background: rgba(255, 255, 255, 0.8);
 }
 
-/* line 118 */
+/* line 130 */
 body.loading {
   overflow: hidden;
 }
 
-/* line 121 */
+/* line 133 */
 body.loading .modal {
   display: block;
 }
 
-/* line 124 */
+/* line 136 */
 #bimatrix-form {
   margin: 0;
 }
 
-/* line 127 */
+/* line 139 */
 .submit-button {
   float: left;
   position: absolute;
   top: 10px;
   right: 15px;
 }
-/* line 132 */
+/* line 144 */
 .submit-button button {
   width: 140px;
   height: 50px;
 }
 
-/* line 136 */
+/* line 148 */
 .payoff-matrix-buttons {
   float: left;
   position: absolute;
   top: 97px;
   right: 15px;
 }
-/* line 141 */
+/* line 153 */
 .payoff-matrix-buttons button {
   margin-left: 10px;
 }
 
-/* line 145 */
+/* line 157 */
 .wrap button.btn:focus {
   outline: none;
 }
 
-/* line 148 */
+/* line 160 */
 input[type=number] {
   -moz-appearance: textfield;
 }
 
-/* line 152 */
+/* line 164 */
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -224,7 +242,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   margin: 0;
 }
 
-/* line 158 */
+/* line 170 */
 .spinner {
   margin: 100px auto;
   width: 50px;
@@ -232,7 +250,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   text-align: center;
   font-size: 10px;
 }
-/* line 164 */
+/* line 176 */
 .spinner > div {
   background-color: #2b3e50;
   height: 100%;
@@ -241,22 +259,22 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
   animation: sk-stretchdelay 1.2s infinite ease-in-out;
 }
-/* line 171 */
+/* line 183 */
 .spinner .rect2 {
   -webkit-animation-delay: -1.1s;
   animation-delay: -1.1s;
 }
-/* line 174 */
+/* line 186 */
 .spinner .rect3 {
   -webkit-animation-delay: -1s;
   animation-delay: -1s;
 }
-/* line 177 */
+/* line 189 */
 .spinner .rect4 {
   -webkit-animation-delay: -0.9s;
   animation-delay: -0.9s;
 }
-/* line 180 */
+/* line 192 */
 .spinner .rect5 {
   -webkit-animation-delay: -0.8s;
   animation-delay: -0.8s;
