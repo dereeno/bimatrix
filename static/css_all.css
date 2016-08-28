@@ -125,38 +125,39 @@ table.table tbody tr td {
 }
 /* line 85 */
 #comp-table .small-table.subsets td {
-  padding: 4px 0;
+  padding: 6px 2px;
 }
 
-/* line 90 */
+/* line 88 */
 #comp-table tr th, #comp-table tr td {
   text-align: center;
+  vertical-align: middle;
 }
 
-/* line 93 */
+/* line 92 */
 input {
   text-align: center;
   max-width: 45px;
 }
 
-/* line 97 */
+/* line 96 */
 .dimensions input {
   width: 40px;
 }
 
-/* line 100 */
+/* line 99 */
 .cell {
   border: 1px solid black;
   height: 70px;
   width: 70px;
 }
-/* line 104 */
+/* line 103 */
 .cell input {
   height: 30px;
   width: 30px;
 }
 
-/* line 108 */
+/* line 107 */
 .A_entry {
   float: left;
   position: relative;
@@ -164,7 +165,7 @@ input {
   left: 2px;
 }
 
-/* line 114 */
+/* line 113 */
 .B_entry {
   float: right;
   position: relative;
@@ -172,7 +173,7 @@ input {
   right: 2px;
 }
 
-/* line 120 */
+/* line 119 */
 .modal {
   display: none;
   position: fixed;
@@ -184,57 +185,57 @@ input {
   background: rgba(255, 255, 255, 0.8);
 }
 
-/* line 130 */
+/* line 129 */
 body.loading {
   overflow: hidden;
 }
 
-/* line 133 */
+/* line 132 */
 body.loading .modal {
   display: block;
 }
 
-/* line 136 */
+/* line 135 */
 #bimatrix-form {
   margin: 0;
 }
 
-/* line 139 */
+/* line 138 */
 .submit-button {
   float: left;
   position: absolute;
   top: 10px;
   right: 15px;
 }
-/* line 144 */
+/* line 143 */
 .submit-button button {
   width: 140px;
   height: 50px;
 }
 
-/* line 148 */
+/* line 147 */
 .payoff-matrix-buttons {
   float: left;
   position: absolute;
   top: 97px;
   right: 15px;
 }
-/* line 153 */
+/* line 152 */
 .payoff-matrix-buttons button {
   margin-left: 10px;
 }
 
-/* line 157 */
+/* line 156 */
 .wrap button.btn:focus {
   outline: none;
 }
 
-/* line 160 */
+/* line 159 */
 input[type=number] {
   -moz-appearance: textfield;
 }
 
-/* line 164 */
+/* line 163 */
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -242,7 +243,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   margin: 0;
 }
 
-/* line 170 */
+/* line 169 */
 .spinner {
   margin: 100px auto;
   width: 50px;
@@ -250,7 +251,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   text-align: center;
   font-size: 10px;
 }
-/* line 176 */
+/* line 175 */
 .spinner > div {
   background-color: #2b3e50;
   height: 100%;
@@ -259,22 +260,22 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
   animation: sk-stretchdelay 1.2s infinite ease-in-out;
 }
-/* line 183 */
+/* line 182 */
 .spinner .rect2 {
   -webkit-animation-delay: -1.1s;
   animation-delay: -1.1s;
 }
-/* line 186 */
+/* line 185 */
 .spinner .rect3 {
   -webkit-animation-delay: -1s;
   animation-delay: -1s;
 }
-/* line 189 */
+/* line 188 */
 .spinner .rect4 {
   -webkit-animation-delay: -0.9s;
   animation-delay: -0.9s;
 }
-/* line 192 */
+/* line 191 */
 .spinner .rect5 {
   -webkit-animation-delay: -0.8s;
   animation-delay: -0.8s;
