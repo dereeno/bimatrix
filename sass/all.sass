@@ -79,14 +79,25 @@ table.table tbody tr td
 #comp-table .second-row th
   border-left: none
 
-#comp-table .small-table,
+#comp-table .equilibria-cell
+  tr:not(:last-child) td
+    border-bottom: 1px solid rgb(221, 221, 221)
+  table.small-table
+    width: 80%
+    margin: auto
+
+#comp-table td
+  padding: 6px
+
+#comp-table .small-table
   width: 100%
+  margin: auto
   .x, .y
     width: 40%
   .central
     width: 10%
   td
-    padding: 2px
+    padding: 4px
   &.subsets td
     padding: 6px 2px
 

@@ -55,84 +55,62 @@ $(document).ready ->
 
   $('form#bimatrix-form').on 'submit', ->
     $('.results').hide()
+
     build_equilbria_table = (equilibria) ->
       eq_table = $('#eq-table tbody')[0]
       eq_table.innerHTML = ''
 
-      $.each equilibria, (i, eq) ->
-        row = document.createElement('tr')
+      for eq, i in equilibria
+        row = create_element 'tr'
         eq_table.appendChild row
-        (row.appendChild document.createElement('td')).innerHTML = i + 1
-        (row.appendChild document.createElement('td')).innerHTML = 'x<sup>' + eq[0]['number'] + '</sup>'
-        (row.appendChild document.createElement('td')).innerHTML = '[' + eq[0]['distribution'].join(', ') + ']'
-        (row.appendChild document.createElement('td')).innerHTML = eq[0]['payoff']
-        (row.appendChild document.createElement('td')).innerHTML = 'y<sup>' + eq[1]['number'] + '</sup>'
-        (row.appendChild document.createElement('td')).innerHTML = '[' + eq[1]['distribution'].join(', ') + ']'
-        (row.appendChild document.createElement('td')).innerHTML = eq[1]['payoff']
+        create_element('td', i+1, null, row)
+        create_element('td', 'x<sup>' + eq[0]['number'] + '</sup>', null, row)
+        create_element('td','[' + eq[0]['distribution'].join(', ') + ']', null, row)
+        create_element('td', eq[0]['payoff'], null, row)
+        create_element('td', 'y<sup>' + eq[1]['number'] + '</sup>', null, row)
+        create_element('td', '[' + eq[1]['distribution'].join(', ') + ']', null, row)
+        create_element('td', eq[1]['payoff'], null, row)
+
+    create_element = (type, html = null, class_name = null, parent = null)->
+      result = document.createElement(type)
+      result.innerHTML = html if html != null
+      result.className = class_name if class_name
+      parent.appendChild result if parent
+      return result
 
     build_components_table = (results) ->
       comp_table = $('#comp-table tbody')[0]
       comp_table.innerHTML = ''
 
-      $.each results, (i, comp_value) ->
+      for comp_value, i in results
+        row = create_element 'tr', null, null, comp_table
+        create_element 'td', i+1, null, row
+        subsets_cell = create_element 'td', null, 'subsets-cell', row
+        subsets_cell.setAttribute('colspan', 3)
+        equilibria_cell = create_element 'td', null, 'equilibria-cell', row
+        equilibria_cell.setAttribute('colspan', 2)
+        create_element 'td', comp_value['index'], null, row
 
-        row = document.createElement('tr')
-        comp_table.appendChild row
-
-        number_cell = document.createElement('td')
-        number_cell.innerHTML = i + 1
         subsets = comp_value['nash_subsets']
         equilibria = comp_value['equilibria']
 
-        subsets_cell = document.createElement('td')
-        subsets_cell.setAttribute('colspan', 3)
-        subsets_cell.className = 'subsets-cell'
-        subsets_table = document.createElement('table')
-        subsets_table.className = 'small-table subsets'
-        subsets_cell.appendChild subsets_table
-        subsets_tbody = document.createElement('tbody')
-        subsets_table.appendChild subsets_tbody
-
-        equilibria_cell = document.createElement('td')
-        equilibria_cell.setAttribute('colspan', 2)
-        equilibria_cell.className = 'equilibria-cell'
-        equilibria_table = document.createElement('table')
-        equilibria_cell.appendChild equilibria_table
-        equilibria_table.className = 'small-table'
-        equilibria_tbody = document.createElement('tbody')
-        equilibria_table.appendChild equilibria_tbody
+        subsets_table = create_element 'table', null, 'small-table subsets', subsets_cell
+        subsets_tbody = create_element 'tbody', null, null, subsets_table
 
         for subset in subsets
           current_row = document.createElement('tr')
           current_row.appendChild parse_component('x', subset[0])
-          cell = document.createElement('td')
-          cell.className = 'central'
-          cell.innerHTML = 'X'
-          current_row.appendChild cell
+          cell = create_element 'td', '&times', 'central', current_row
           current_row.appendChild parse_component('y', subset[1])
           subsets_tbody.appendChild current_row
 
+        equilibria_table = create_element 'table', null, 'small-table', equilibria_cell
+        equilibria_tbody = create_element 'tbody', null, null, equilibria_table
+
         for eq in equilibria
-          current_row = document.createElement('tr')
-          cell1 = document.createElement('td')
-          cell2 = document.createElement('td')
-          cell1.className = 'x'
-          cell2.className = 'y'
-          cell1.innerHTML = eq['eq_number']
-          cell2.innerHTML = eq['lex_index']
-          current_row.appendChild cell1
-          current_row.appendChild cell2
-          equilibria_tbody.appendChild current_row
-
-        index_cell = document.createElement('td')
-        index_cell.innerHTML = comp_value['index']
-        row.appendChild index_cell
-
-        append_children row, [number_cell, subsets_cell, equilibria_cell, index_cell]
-
-    append_children = (parent, children) ->
-      for child in children
-        parent.appendChild(child)
+          current_row = create_element 'tr', null, null, equilibria_tbody
+          create_element 'td', eq['eq_number'], 'x', current_row
+          create_element 'td', eq['lex_index'], 'y', current_row
 
     parse_component = (player, strategies) ->
       text = '{ '
@@ -144,7 +122,6 @@ $(document).ready ->
       result.className = player
       result.innerHTML = text
       return result
-
 
     collect_matrix_data = (rows, cols) ->
       A_values = []
