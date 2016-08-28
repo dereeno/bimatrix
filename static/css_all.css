@@ -83,106 +83,110 @@ table.table tbody tr td {
   vertical-align: middle;
 }
 
-/* line 61 */
+/* line 60 */
+#eq-table {
+  margin-bottom: 40px;
+}
+/* line 63 */
 #eq-table tr th, #eq-table tr td {
   text-align: center;
   vertical-align: middle;
 }
-/* line 64 */
+/* line 66 */
 #eq-table tr.first th:not([rowspan]) {
   border-bottom: none;
   vertical-align: middle;
   text-align: center;
 }
 
-/* line 69 */
+/* line 71 */
 #bimatrix-table {
   margin-bottom: 40px;
   float: left;
 }
 
-/* line 73 */
+/* line 75 */
 #comp-table tr.first th:not([rowspan]) {
   border-bottom: none;
 }
 
-/* line 76 */
+/* line 78 */
 #comp-table .second-row th:not(.with-border) {
   border-right: none;
 }
 
-/* line 79 */
+/* line 81 */
 #comp-table .second-row th {
   border-left: none;
 }
 
-/* line 83 */
+/* line 85 */
 #comp-table .equilibria-cell tr:not(:last-child) td {
   border-bottom: 1px solid #dddddd;
 }
-/* line 85 */
+/* line 87 */
 #comp-table .equilibria-cell table.small-table {
   width: 80%;
   margin: auto;
 }
 
-/* line 89 */
+/* line 91 */
 #comp-table td {
   padding: 6px;
 }
 
-/* line 92 */
+/* line 94 */
 #comp-table .small-table {
   width: 100%;
   margin: auto;
 }
-/* line 95 */
+/* line 97 */
 #comp-table .small-table .x, #comp-table .small-table .y {
   width: 40%;
 }
-/* line 97 */
+/* line 99 */
 #comp-table .small-table .central {
   width: 10%;
 }
-/* line 99 */
+/* line 101 */
 #comp-table .small-table td {
   padding: 4px;
 }
-/* line 101 */
+/* line 103 */
 #comp-table .small-table.subsets td {
   padding: 6px 2px;
 }
 
-/* line 104 */
+/* line 106 */
 #comp-table tr th, #comp-table tr td {
   text-align: center;
   vertical-align: middle;
 }
 
-/* line 108 */
+/* line 110 */
 input {
   text-align: center;
   max-width: 45px;
 }
 
-/* line 112 */
+/* line 114 */
 .dimensions input {
   width: 40px;
 }
 
-/* line 115 */
+/* line 117 */
 .cell {
   border: 1px solid black;
   height: 70px;
   width: 70px;
 }
-/* line 119 */
+/* line 121 */
 .cell input {
   height: 30px;
   width: 30px;
 }
 
-/* line 123 */
+/* line 125 */
 .A_entry {
   float: left;
   position: relative;
@@ -190,7 +194,7 @@ input {
   left: 2px;
 }
 
-/* line 129 */
+/* line 131 */
 .B_entry {
   float: right;
   position: relative;
@@ -198,7 +202,7 @@ input {
   right: 2px;
 }
 
-/* line 135 */
+/* line 137 */
 .modal {
   display: none;
   position: fixed;
@@ -210,57 +214,57 @@ input {
   background: rgba(255, 255, 255, 0.8);
 }
 
-/* line 145 */
+/* line 147 */
 body.loading {
   overflow: hidden;
 }
 
-/* line 148 */
+/* line 150 */
 body.loading .modal {
   display: block;
 }
 
-/* line 151 */
+/* line 153 */
 #bimatrix-form {
   margin: 0;
 }
 
-/* line 154 */
+/* line 156 */
 .submit-button {
   float: left;
   position: absolute;
   top: 10px;
   right: 15px;
 }
-/* line 159 */
+/* line 161 */
 .submit-button button {
   width: 140px;
   height: 50px;
 }
 
-/* line 163 */
+/* line 165 */
 .payoff-matrix-buttons {
   float: left;
   position: absolute;
   top: 97px;
   right: 15px;
 }
-/* line 168 */
+/* line 170 */
 .payoff-matrix-buttons button {
   margin-left: 10px;
 }
 
-/* line 172 */
+/* line 174 */
 .wrap button.btn:focus {
   outline: none;
 }
 
-/* line 175 */
+/* line 177 */
 input[type=number] {
   -moz-appearance: textfield;
 }
 
-/* line 179 */
+/* line 181 */
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -268,7 +272,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   margin: 0;
 }
 
-/* line 185 */
+/* line 187 */
 .spinner {
   margin: 100px auto;
   width: 50px;
@@ -276,7 +280,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   text-align: center;
   font-size: 10px;
 }
-/* line 191 */
+/* line 193 */
 .spinner > div {
   background-color: #2b3e50;
   height: 100%;
@@ -285,22 +289,22 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
   animation: sk-stretchdelay 1.2s infinite ease-in-out;
 }
-/* line 198 */
+/* line 200 */
 .spinner .rect2 {
   -webkit-animation-delay: -1.1s;
   animation-delay: -1.1s;
 }
-/* line 201 */
+/* line 203 */
 .spinner .rect3 {
   -webkit-animation-delay: -1s;
   animation-delay: -1s;
 }
-/* line 204 */
+/* line 206 */
 .spinner .rect4 {
   -webkit-animation-delay: -0.9s;
   animation-delay: -0.9s;
 }
-/* line 207 */
+/* line 209 */
 .spinner .rect5 {
   -webkit-animation-delay: -0.8s;
   animation-delay: -0.8s;
