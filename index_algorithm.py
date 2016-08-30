@@ -364,10 +364,46 @@ def write_results(components, equilibria_hash, all_equilibria):
     with open('index_output', 'w') as file:
         file.write(json.dumps(result))
 
+def print_results(all_equilibria, components):
+
+    indent = " "*2
+
+    print 'INPUT:'
+    print 'Payoff matrix to player 1'
+    print A
+    print 'Payoff matrix to player 2'
+    print B
+    print
+
+    print 'OUTPUT:'
+    print "EXTREME EQUILIBRIA"
+    for i, eq in enumerate(all_equilibria):
+        print indent, "Equilibrium number:", i+1
+        print indent*2, "Player 1"
+        print indent*3, "Strategy number:", 'x' + str(eq.x.number)
+        print indent*3, "Distribution:", [str(i) for i in eq.x.distribution]
+        print indent*3, "Payoff:", eq.x.payoff
+        print indent*2, "Player 2"
+        print indent*3, "Strategy number:", 'y' + str(eq.y.number)
+        print indent*3, "Distribution:", [str(i) for i in eq.y.distribution]
+        print indent*3, "Payoff:", eq.y.payoff
+
+    print
+    print 'EQUILIBRIUM COMPONENTS'
+    for i, component in enumerate(components):
+        print indent, "Component number:", i+1
+        print indent*2,  "Nash subsets:"
+        for subset in component.nash_subsets:
+            print indent*3, ['x' + str(i) for i in subset[0]], 'X', ['y' + str(i) for i in subset[1]]
+        print indent*2, 'Extreme Equilibria'
+        for eq in component.extreme_equilibria:
+            print indent*3, 'Number:', all_equilibria.index(eq) + 1, ', Lex-index:', eq.lex_index
+
 def run():
     equilibria_hash, components_hash = initialise()
     all_equilibria = create_all_equilibria(equilibria_hash)
     components = create_equilibrium_components(all_equilibria, components_hash)
     write_results(components, equilibria_hash, all_equilibria)
+    print_results(all_equilibria, components)
 
 if __name__ == "__main__": run()
