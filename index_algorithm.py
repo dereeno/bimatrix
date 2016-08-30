@@ -369,9 +369,9 @@ def print_results(all_equilibria, components):
     indent = " "*2
 
     print 'INPUT:'
-    print 'Payoff matrix to player 1'
+    print 'Payoff matrix to player 1:'
     print A
-    print 'Payoff matrix to player 2'
+    print 'Payoff matrix to player 2:'
     print B
     print
 
