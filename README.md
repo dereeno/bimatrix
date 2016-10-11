@@ -4,7 +4,7 @@ Live running version of this program can be found in [bimatrix.herokuapp.com](bi
 
 `index_algorithm.py` contains the core of the algorithm and is located at the root directory of the project.
 
-A light-weight Flask based web server can be found in `app.py`.
+A light-weight Flask based web server can be found in the above `app.py` file.
 
 See `Installation Instructions.pdf` for more details.
 
