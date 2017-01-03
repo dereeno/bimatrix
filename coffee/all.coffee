@@ -73,7 +73,7 @@ $(document).ready ->
 
       i = 0
       for line in lines_a
-        entries = line.split(' ')
+        entries = line.split(/\s+/)
         j = 0
         for entry in entries
           if entry
@@ -83,7 +83,7 @@ $(document).ready ->
 
       i = 0
       for line in lines_b
-        entries = line.split(' ')
+        entries = line.split(/\s+/)
         j = 0
         for entry in entries
           if entry

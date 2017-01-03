@@ -101,7 +101,7 @@ $(document).ready(function() {
       i = 0;
       for (k = 0, len = lines_a.length; k < len; k++) {
         line = lines_a[k];
-        entries = line.split(' ');
+        entries = line.split(/\s+/);
         j = 0;
         for (l = 0, len1 = entries.length; l < len1; l++) {
           entry = entries[l];
@@ -115,7 +115,7 @@ $(document).ready(function() {
       i = 0;
       for (o = 0, len2 = lines_b.length; o < len2; o++) {
         line = lines_b[o];
-        entries = line.split(' ');
+        entries = line.split(/\s+/);
         j = 0;
         for (p = 0, len3 = entries.length; p < len3; p++) {
           entry = entries[p];
