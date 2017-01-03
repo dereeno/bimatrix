@@ -25,8 +25,16 @@ header {
   color: white;
   background-color: #2b3e50;
 }
+/* line 20 */
+header img {
+  width: 50px;
+  float: right;
+  position: relative;
+  top: -45px;
+  right: 10px;
+}
 
-/* line 21 */
+/* line 27 */
 footer {
   height: 40px;
   width: 100%;
@@ -34,7 +42,7 @@ footer {
   background-color: #f5f5f5;
   text-align: center;
 }
-/* line 27 */
+/* line 33 */
 footer span {
   color: #777;
   font-size: 11px;
@@ -42,149 +50,159 @@ footer span {
   vertical-align: middle;
 }
 
-/* line 33 */
+/* line 39 */
 .col-md-6 {
   min-height: 100%;
   border-left: #eee 1px solid;
   border-right: #eee 1px solid;
 }
 
-/* line 38 */
+/* line 44 */
 .row {
   height: 100%;
   overflow: auto;
   margin: 0;
 }
 
-/* line 43 */
+/* line 49 */
 h1, h2 {
   text-transform: uppercase;
 }
 
-/* line 46 */
+/* line 52 */
 h1 {
   font-size: 18px;
   font-weight: normal;
 }
 
-/* line 50 */
+/* line 56 */
 h2 {
   font-size: 16px;
   margin-bottom: 15px;
 }
 
-/* line 54 */
+/* line 60 */
 .results {
   display: none;
 }
 
-/* line 57 */
+/* line 63 */
 table.table tbody tr td {
   vertical-align: middle;
 }
 
-/* line 60 */
+/* line 66 */
 #eq-table {
   margin-bottom: 40px;
 }
-/* line 63 */
+/* line 69 */
 #eq-table tr th, #eq-table tr td {
   text-align: center;
   vertical-align: middle;
 }
-/* line 66 */
+/* line 72 */
 #eq-table tr.first th:not([rowspan]) {
   border-bottom: none;
 }
 
-/* line 69 */
+/* line 75 */
 #bimatrix-table {
   margin-bottom: 40px;
   float: left;
 }
 
-/* line 73 */
+/* line 79 */
+#textarea-input {
+  display: none;
+}
+/* line 81 */
+#textarea-input textarea {
+  margin-right: 20px;
+  vertical-align: top;
+}
+
+/* line 85 */
 #comp-table tr.first th:not([rowspan]) {
   border-bottom: none;
 }
 
-/* line 76 */
+/* line 88 */
 #comp-table .second-row th:not(.with-border) {
   border-right: none;
 }
 
-/* line 79 */
+/* line 91 */
 #comp-table .second-row th {
   border-left: none;
 }
 
-/* line 83 */
+/* line 95 */
 #comp-table .equilibria-cell tr:not(:last-child) td {
   border-bottom: 1px solid #ddd;
 }
-/* line 85 */
+/* line 97 */
 #comp-table .equilibria-cell table.small-table {
   width: 80%;
   margin: auto;
 }
 
-/* line 89 */
+/* line 101 */
 #comp-table td {
   padding: 6px;
 }
 
-/* line 92 */
+/* line 104 */
 #comp-table .small-table {
   width: 100%;
   margin: auto;
 }
-/* line 95 */
+/* line 107 */
 #comp-table .small-table .x, #comp-table .small-table .y {
   width: 40%;
 }
-/* line 97 */
+/* line 109 */
 #comp-table .small-table .central {
   width: 10%;
 }
-/* line 99 */
+/* line 111 */
 #comp-table .small-table td {
   padding: 4px;
 }
-/* line 101 */
+/* line 113 */
 #comp-table .small-table.subsets td {
   padding: 6px 2px;
 }
 
-/* line 104 */
+/* line 116 */
 #comp-table tr th, #comp-table tr td {
   text-align: center;
   vertical-align: middle;
 }
 
-/* line 108 */
+/* line 120 */
 input {
   text-align: center;
   max-width: 45px;
 }
 
-/* line 112 */
+/* line 124 */
 .dimensions input {
   width: 40px;
 }
 
-/* line 115 */
+/* line 127 */
 .cell {
   border: 1px solid #ddd;
   height: 70px;
   width: 70px;
 }
-/* line 119 */
+/* line 131 */
 .cell input {
   height: 30px;
   width: 30px;
 }
 
-/* line 123 */
+/* line 135 */
 .A_entry {
   float: left;
   position: relative;
@@ -192,15 +210,15 @@ input {
   left: 2px;
 }
 
-/* line 129 */
+/* line 141 */
 .B_entry {
   float: right;
   position: relative;
-  bottom: 18px;
+  bottom: 17px;
   right: 2px;
 }
 
-/* line 135 */
+/* line 147 */
 .modal {
   display: none;
   position: fixed;
@@ -212,57 +230,67 @@ input {
   background: rgba(255, 255, 255, 0.8);
 }
 
-/* line 145 */
+/* line 157 */
 body.loading {
   overflow: hidden;
 }
 
-/* line 148 */
+/* line 160 */
 body.loading .modal {
   display: block;
 }
 
-/* line 151 */
+/* line 163 */
 #bimatrix-form {
   margin: 0;
 }
+/* line 166 */
+#bimatrix-form #input-type-form span {
+  padding-right: 7px;
+}
+/* line 168 */
+#bimatrix-form #input-type-form input {
+  margin-right: 30px;
+}
 
-/* line 154 */
+/* line 171 */
 .submit-button {
   float: left;
   position: absolute;
   top: 10px;
   right: 15px;
 }
-/* line 159 */
+/* line 176 */
 .submit-button button {
+  background-color: #2b3e50;
+  color: white;
   width: 140px;
   height: 50px;
 }
 
-/* line 163 */
+/* line 182 */
 .payoff-matrix-buttons {
   float: left;
   position: absolute;
   top: 97px;
   right: 15px;
 }
-/* line 168 */
+/* line 187 */
 .payoff-matrix-buttons button {
   margin-left: 10px;
 }
 
-/* line 172 */
+/* line 191 */
 .wrap button.btn:focus {
   outline: none;
 }
 
-/* line 175 */
+/* line 194 */
 input[type=number] {
   -moz-appearance: textfield;
 }
 
-/* line 179 */
+/* line 198 */
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -270,7 +298,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   margin: 0;
 }
 
-/* line 185 */
+/* line 204 */
 .spinner {
   margin: 100px auto;
   width: 50px;
@@ -278,7 +306,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   text-align: center;
   font-size: 10px;
 }
-/* line 191 */
+/* line 210 */
 .spinner > div {
   background-color: #2b3e50;
   height: 100%;
@@ -287,22 +315,22 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
   animation: sk-stretchdelay 1.2s infinite ease-in-out;
 }
-/* line 198 */
+/* line 217 */
 .spinner .rect2 {
   -webkit-animation-delay: -1.1s;
   animation-delay: -1.1s;
 }
-/* line 201 */
+/* line 220 */
 .spinner .rect3 {
   -webkit-animation-delay: -1s;
   animation-delay: -1s;
 }
-/* line 204 */
+/* line 223 */
 .spinner .rect4 {
   -webkit-animation-delay: -0.9s;
   animation-delay: -0.9s;
 }
-/* line 207 */
+/* line 226 */
 .spinner .rect5 {
   -webkit-animation-delay: -0.8s;
   animation-delay: -0.8s;

@@ -37,6 +37,13 @@ $(document).ready ->
 
   create_matrix 2, 2
 
+  swap_inputs = ->
+    $('form#bimatrix-form #bimatrix-table').toggle()
+    $('form#bimatrix-form #textarea-input').toggle()
+
+  $('form#bimatrix-form input[type="radio"]').on 'change', ->
+    swap_inputs()
+
   $('form.dimensions').on 'submit', ->
     m = $('input#number_m').val()
     n = $('input#number_n').val()
@@ -46,12 +53,47 @@ $(document).ready ->
     $(this).val('')
 
   $('form#bimatrix-form .random').on 'click', ->
-    $.each $('form#bimatrix-form').find(':input:not([type=hidden])'), (index, input) ->
+    $.each $('form#bimatrix-form #bimatrix-table input'), (index, input) ->
       rand = Math.floor(Math.random() * 10) + 1
       $(input).val rand
 
+    if $('input#text-input:checked').length > 0
+      $('input#table-input').prop('checked', true).trigger('change')
+
   $('form#bimatrix-form .clear').on 'click', ->
     $('form#bimatrix-form').find(':input:not([type=hidden])').val('')
+
+  parse_text_inputs_into_table = ->
+    if $('input#text-input:checked').length > 0
+      form = $('form#bimatrix-form')
+      lines_a = $('#textarea-a').val().split('\n')
+      lines_b = $('#textarea-b').val().split('\n')
+
+      $('form#bimatrix-form #bimatrix-table input').val(0)
+
+      i = 0
+      for line in lines_a
+        entries = line.split(' ')
+        j = 0
+        for entry in entries
+          if entry
+            form.find('input[row=' + i + '][col=' + j + '].A_entry').val(entry)
+          j++
+        i++
+
+      i = 0
+      for line in lines_b
+        entries = line.split(' ')
+        j = 0
+        for entry in entries
+          if entry
+            form.find('input[row=' + i + '][col=' + j + '].B_entry').val(entry)
+          j++
+        i++
+      $('input#table-input').prop('checked', true).trigger('change')
+
+  $('.run-algo').on 'click', ->
+    parse_text_inputs_into_table()
 
   $('form#bimatrix-form').on 'submit', ->
     $('.results').hide()
